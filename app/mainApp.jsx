@@ -9,6 +9,6 @@ var dd = debug('mainApp');
 window.location.hash = '/';
 
 router.run(Handler => {
-  dd('router.run', Handler);
-  React.render(<Handler />, document.getElementById('react-root'));
+    dd('router.run', Handler);
+    React.render(<Handler />, document.getElementById('react-root'));
 });
