@@ -1,32 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router';
-import _ from 'lodash'
+import { SystemWindowList } from '../components/systemWindowList.jsx';
+// Debug..
 
-
-function areWeRender() {
-    return window.require('is-electron-renderer');
-}
-
-function getWindowListAsJson() {
-    return window.require('native-sgrab-helper').windowListAsJson();
-}
+import _debug from 'debug';
+_debug.enable('app:*');
+const debug = _debug('app:containers/HomePageContainer');
 
 export default class HomePageContainer extends React.Component {
 
     render() {
-
-        function renderWindowItem(i) {
-            return (
-                <div> {i.owner} </div>
-                );
-        }
-
+        debug('rendering container');
+        debug(SystemWindowList);
         return (
             <div>
                 <h2>Home Page</h2>
                 <p>This is the homepage.</p>
+                <SystemWindowList />
                 <Link to="about">to About</Link>
-                <div> {_.map(getWindowListAsJson(), renderWindowItem)} </div>
             </div>
         );
     }
