@@ -14,12 +14,15 @@ module.exports = function(opts) {
     main: opts.prerender ? path.join(appRoot, 'mainApp') : path.join(appRoot, 'mainApp')
   };
 
-
+    console.log(path.resolve(__dirname, "../node_modules/gl-react"))
   var loaders = {
     'jsx': opts.hotComponents ? [ 'react-hot-loader', 'babel-loader' ] : 'babel-loader',
     'js': {
       loader: 'babel-loader',
-      include: appRoot
+        include: [
+            appRoot,
+            path.resolve(__dirname, "../node_modules/gl-react")
+            ]
     },
     'json': 'json-loader',
     'txt': 'raw-loader',

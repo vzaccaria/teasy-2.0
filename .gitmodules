@@ -1,0 +1,3 @@
+[submodule "app/gl-react"]
+	path = app/gl-react
+	url = https://github.com/ProjectSeptemberInc/gl-react.git

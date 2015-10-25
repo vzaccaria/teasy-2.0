@@ -75,14 +75,20 @@
     "debug": "^2.2.0",
     "electron-debug": "^0.2.1",
     "flux": "^2.1.1",
+    "gl-texture2d": "^2.0.10",
+    "glslify": "^2.3.1",
     "html-loader": "^0.3.0",
+    "image-data-resizer": "^0.1.0",
     "is-electron-renderer": "^2.0.0",
     "jpeg-fresh": "^2.0.10",
     "json-loader": "^0.5.3",
     "keymirror": "^0.1.1",
     "lodash": "^3.10.1",
+    "ndarray": "^1.0.18",
     "object-assign": "^4.0.1",
     "react": "^0.13.3",
-    "react-router": "^0.13.3"
+    "react-router": "^0.13.3",
+    "three": "^0.73.0",
+    "webgl-context": "^2.2.0"
   }
 }

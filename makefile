@@ -10,3 +10,10 @@ dev:
 hot:
 		npm run hot-dev-server &
 		npm run start-hot &
+
+stop:
+		killall node && killall Electron
+
+restart:
+		make stop
+		make hot

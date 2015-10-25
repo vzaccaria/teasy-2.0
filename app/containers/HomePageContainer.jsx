@@ -17,9 +17,7 @@ export default class HomePageContainer extends React.Component {
                 <h2>Home Page</h2>
                 <p>This is the homepage.</p>
                 <SystemWindowList />
-                <Link to="about">to About</Link>
             </div>
         );
     }
-
 }
