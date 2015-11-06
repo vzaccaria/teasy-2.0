@@ -3,7 +3,7 @@ all: build
 build:
 		./node_modules/.bin/webpack --config ./webpack/webpack-dev-server.config.js
 
-dev:
+dev: build
 		npm run dev-server &
 		npm run start-dev &
 

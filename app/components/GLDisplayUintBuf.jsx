@@ -19,7 +19,7 @@ const shaders = GL.Shaders.create({
 let GLDisplayUintBuf = GL.createComponent(
     ({ width, height, image }) => {
         return (
-            <GL.View width={width} height={height} shader={shaders.justDisplay} uniforms={{ image }} />
+            <GL.View width={parseInt(width)} height={parseInt(height)} shader={shaders.justDisplay} uniforms={{ image }} />
         );
     },
     { displayName: "Raw Buffer" }

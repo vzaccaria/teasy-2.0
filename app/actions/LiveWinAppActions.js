@@ -2,11 +2,11 @@ var alt = require('../utils/alt');
 
 import _debug from 'debug';
 _debug.enable('app:*');
-const debug = _debug('app:actions/AppActions.jsx');
+const debug = _debug('app:actions/LiveWinAppActions.jsx');
 
 debug('loaded')
 
-class AppActions {
+class LiveWinAppActions {
     constructor() {
         this.generateActions(
             'updateCurrentLiveWindow' /* Use commas to add actions */
@@ -14,4 +14,4 @@ class AppActions {
     }
 }
 
-module.exports = window.$a = alt.createActions(AppActions);
+module.exports = window.$a = alt.createActions(LiveWinAppActions);

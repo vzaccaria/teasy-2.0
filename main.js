@@ -9,10 +9,27 @@ require('electron-debug')();
 require('crash-reporter').start();
 
 var mainWindow = null;
+var liveWindow = null;
+
 
 app.on('window-all-closed', function() {
   if (process.platform !== 'darwin') app.quit();
 });
+
+function setupLiveWindow() {
+    liveWindow= new BrowserWindow({ width: 800, height: 600 });
+  if (process.env.HOT) {
+    liveWindow.loadUrl('file://' + __dirname + '/app/hot-dev-liveWin.html');
+  } else {
+    liveWindow.loadUrl('file://' + __dirname + '/app/liveWin.html');
+  }
+    liveWindow.on('closed', function() {
+        liveWindow = null;
+    })
+    if (process.env.NODE_ENV === 'development') {
+        liveWindow.openDevTools();
+    }
+}
 
 
 app.on('ready', function() {
@@ -31,6 +48,8 @@ app.on('ready', function() {
   if (process.env.NODE_ENV === 'development') {
     mainWindow.openDevTools();
   }
+
+    setupLiveWindow()
 
   if (process.platform === 'darwin') {
     template = [{

@@ -31,3 +31,6 @@ node_modules
 
 # App packaged
 release
+dist-old
+dist
+/npm-debug.log.4395bb813771e5310d5e45b316bd60d6

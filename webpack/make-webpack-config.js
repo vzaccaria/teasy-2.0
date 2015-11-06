@@ -11,7 +11,8 @@ var appRoot = path.join(projectRoot, 'app');
 
 module.exports = function(opts) {
   var entry = {
-    main: opts.prerender ? path.join(appRoot, 'mainApp') : path.join(appRoot, 'mainApp')
+      main: opts.prerender ? path.join(appRoot, 'mainApp') : path.join(appRoot, 'mainApp'),
+      liveWin: path.join(appRoot, 'liveWinApp')
   };
 
     console.log(path.resolve(__dirname, "../node_modules/gl-react"))
@@ -70,7 +71,7 @@ module.exports = function(opts) {
 
   var output = {
     path: projectRoot + '/dist/',
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     publicPath: publicPath,
     contentBase: projectRoot + '/public/',
     libraryTarget: 'commonjs2'
