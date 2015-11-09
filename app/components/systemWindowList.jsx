@@ -29,7 +29,7 @@ let SystemWindowList = React.createClass({
             )});
 
         return(
-            <div>{renderedItems}</div>
+                <div className="ui divided items">{renderedItems}</div>
         )
     }
 });
