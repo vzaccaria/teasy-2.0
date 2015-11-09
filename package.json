@@ -54,6 +54,7 @@
     "file-loader": "^0.8.4",
     "html-loader": "^0.3.0",
     "json-loader": "^0.5.2",
+    "less-loader": "^2.2.1",
     "loaders-by-extension": "^1.0.0",
     "markdown-loader": "^0.1.7",
     "minimist": "^1.2.0",
