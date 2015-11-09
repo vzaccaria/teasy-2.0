@@ -1,7 +1,7 @@
 import React from 'react';
 import { WindowCapture } from '../components/windowCaptureGLReact.jsx';
 import LiveWinAppStore from '../stores/LiveWinAppStore'
-// Debug..
+import _ from 'lodash'
 
 import _debug from 'debug';
 _debug.enable('app:*');
@@ -27,11 +27,14 @@ export default class PreviewContainer extends React.Component {
 
     render() {
         debug('rendering container');
-        if(this.state) {
+        if(_.isObject(this.state) && !(this.state.currentLiveWindow === 0)) {
             return (
                 <div>
                     <h2>Previewing {this.props.params}</h2>
-                    <WindowCapture width="800" height="600" wid={this.state.currentLiveWindow} dynamic="1" />
+                    <WindowCapture
+                        width={this.state.window.size.width}
+                        height={this.state.window.size.height}
+                        wid={this.state.currentLiveWindow} dynamic="1" />
                 </div>
             );}
         else {

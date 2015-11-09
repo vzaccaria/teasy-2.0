@@ -1,4 +1,3 @@
-var _ = require('lodash')
 var alt = require('../utils/alt');
 var LiveWinAppActions = require('../actions/LiveWinAppActions');
 
@@ -12,6 +11,7 @@ class LiveWinAppStore {
     constructor() {
         /* `this` is the state */
         this.currentLiveWindow = 0
+        this.window = { size: { width: window.innerWidth, height: window.innerHeight } }
 
         /* Bind the actions in LiveWinAppActions */
         this.bindActions(LiveWinAppActions)
@@ -20,6 +20,10 @@ class LiveWinAppStore {
     updateCurrentLiveWindow(wid) {
         this.currentLiveWindow = wid;
     }
+
+    updateWindowSize(size) {
+        this.window.size = size;
+    }
 }
 
-module.exports = alt.createStore(LiveWinAppStore, 'LiveWinAppStore');
+module.exports = window.$s = alt.createStore(LiveWinAppStore, 'LiveWinAppStore');
