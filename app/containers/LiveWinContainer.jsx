@@ -31,7 +31,7 @@ export default class PreviewContainer extends React.Component {
             return (
                 <div>
                     <h2>Previewing {this.props.params}</h2>
-                    <WindowCapture width="400" height="280" wid={this.state.currentLiveWindow} dynamic="1" />
+                    <WindowCapture width="800" height="600" wid={this.state.currentLiveWindow} dynamic="1" />
                 </div>
             );}
         else {
