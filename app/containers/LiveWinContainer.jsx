@@ -4,8 +4,11 @@ import LiveWinAppStore from '../stores/LiveWinAppStore'
 import _ from 'lodash'
 
 import _debug from 'debug';
-_debug.enable('app:*');
 const debug = _debug('app:containers/LiveWinContainer');
+
+const validState = (state) => {
+    return (!_.isNull(state) && !_.isUndefined(state) && state.currentLiveWindow !== 0)
+}
 
 export default class PreviewContainer extends React.Component {
 
@@ -27,10 +30,9 @@ export default class PreviewContainer extends React.Component {
 
     render() {
         debug('rendering container');
-        if(_.isObject(this.state) && !(this.state.currentLiveWindow === 0)) {
+        if(validState(this.state)) {
             return (
                 <div>
-                    <h2>Previewing {this.props.params}</h2>
                     <WindowCapture
                         width={this.state.window.size.width}
                         height={this.state.window.size.height}
@@ -38,7 +40,7 @@ export default class PreviewContainer extends React.Component {
                 </div>
             );}
         else {
-            return <div> cant render anything here </div>;
+            return <div> sorry nothing to render...</div>;
         }
     }
 }

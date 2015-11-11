@@ -4,10 +4,10 @@ import LiveWinContainer from './containers/LiveWinContainer';
 import { updateWindowSize } from './actions/LiveWinAppActions';
 import { listenToWidChange } from './utils/liveWinIPC';
 import _debug from 'debug';
+import '../semantic/src/semantic.less';
 
 
-_debug.enable('liveWinApp:*');
-const debug = _debug('liveWinApp:main');
+const debug = _debug('app:liveWinApp');
 debug('Live w. started');
 
 function registerListeners() {

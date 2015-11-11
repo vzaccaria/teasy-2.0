@@ -3,7 +3,6 @@ var ipc = require('ipc');
 var { updateCurrentLiveWindow } = require('../actions/LiveWinAppActions');
 
 import _debug from 'debug';
-_debug.enable('liveWinApp:*');
 const debug = _debug('liveWinApp:utils/liveWinIPC');
 
 function sendWidChange(wid) {

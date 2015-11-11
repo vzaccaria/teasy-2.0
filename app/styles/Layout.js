@@ -1,5 +1,12 @@
 const xWidth = 300;
 
+const getPreviewSize = (window) => {
+    return {
+        width: (window.width - xWidth) > 0 ? (window.width - xWidth) : 0,
+        height: window.height
+    }
+}
+
 const WindowListStyle = (window) => {
     return {
         boxSizing: 'border-box',
@@ -18,5 +25,5 @@ const PreviewStyle = {
 }
 
 module.exports = {
-    WindowListStyle, PreviewStyle
+    WindowListStyle, PreviewStyle, getPreviewSize
 }

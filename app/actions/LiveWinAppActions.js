@@ -1,8 +1,7 @@
 var alt = require('../utils/alt');
 
 import _debug from 'debug';
-_debug.enable('app:*');
-const debug = _debug('app:actions/LiveWinAppActions.jsx');
+const debug = _debug('app:actions/LiveWinAppActions');
 
 debug('loaded')
 

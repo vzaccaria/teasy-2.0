@@ -1,12 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { WindowCapture } from '../components/windowCaptureGLReact.jsx';
 import AppStore from '../stores/AppStore'
+import _ from 'lodash'
+import { getPreviewSize } from '../styles/Layout'
 // Debug..
 
 import _debug from 'debug';
-_debug.enable('app:*');
 const debug = _debug('app:containers/PreviewContainer');
+
+const validState = (state) => {
+    return (!_.isNull(state) && !_.isUndefined(state) && state.currentLiveWindow !== 0)
+}
 
 export default class PreviewContainer extends React.Component {
 
@@ -28,11 +32,30 @@ export default class PreviewContainer extends React.Component {
 
     render() {
         debug('rendering container');
-        if(this.state) {
+        if(validState(this.state)) {
+            var width = 400;
+            var height = 200
+            var s = getPreviewSize(this.state.window.size);
+            width = s.width;
+            height = s.height*2/3;
+            var own = this.state.currentLiveWindowData.owner;
+            var nam = this.state.currentLiveWindowData.name;
+            var clw = this.state.currentLiveWindow;
+
+            let hd = (
+                <h2 className="ui header">
+                    {own}
+                    <div className="sub header">
+                        {nam}
+                    </div>
+                </h2>);
+
             return (
                 <div>
-                    <h2>Previewing {this.props.params}</h2>
-                    <WindowCapture width="400" height="280" wid={this.state.currentLiveWindow} dynamic="1" />
+                    <div className="ui container">
+                            <div className="sixteen wide column"> {hd} </div>
+                    </div>
+                    <WindowCapture width={width} height={height} wid={clw} dynamic="1" />
                 </div>
             );}
         else {

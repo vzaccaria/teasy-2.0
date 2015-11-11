@@ -2,8 +2,7 @@ var alt = require('../utils/alt');
 var { sendWidChange } = require('../utils/liveWinIPC')
 
 import _debug from 'debug';
-_debug.enable('app:*');
-const debug = _debug('app:actions/AppActions.jsx');
+const debug = _debug('app:actions/AppActions');
 
 debug('loaded')
 
@@ -11,6 +10,8 @@ class AppActions {
     constructor() {
         this.generateActions(
             /* Easier - comma separated list of methods.. */
+            'updateWindowSize', /* Use commas to add actions */
+            'updateCurrentSystemWindows'
         )
     }
 

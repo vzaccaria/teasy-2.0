@@ -2,7 +2,6 @@ var alt = require('../utils/alt');
 var LiveWinAppActions = require('../actions/LiveWinAppActions');
 
 import _debug from 'debug';
-_debug.enable('app:*');
 const debug = _debug('app:stores/LiveWinAppStore.jsx');
 
 debug('loaded');

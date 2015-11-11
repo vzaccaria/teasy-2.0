@@ -35,13 +35,12 @@ function setupLiveWindow() {
         liveWindow = null;
     })
     if (process.env.NODE_ENV === 'development') {
-        liveWindow.openDevTools();
+//        liveWindow.openDevTools();
     }
     byPassWidChange(liveWindow);
 }
 
-
-app.on('ready', function() {
+function setupMainWindow() {
     mainWindow = new BrowserWindow({
         width: 1024,
         height: 728
@@ -58,9 +57,12 @@ app.on('ready', function() {
     });
 
     if (process.env.NODE_ENV === 'development') {
-        mainWindow.openDevTools();
+//        mainWindow.openDevTools();
     }
+}
 
+
+app.on('ready', function() {
+    setupMainWindow();
     setupLiveWindow();
-
 });

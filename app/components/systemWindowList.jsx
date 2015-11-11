@@ -2,36 +2,64 @@ import React from 'react';
 import _ from 'lodash'
 
 import SystemWindowListItem from './systemWindowListItem';
-
+import { updateCurrentSystemWindows } from '../actions/AppActions'
+import AppStore from '../stores/AppStore'
 
 import _debug from 'debug';
-_debug.enable('app:*');
 const debug = _debug('app:components/systemWindowList');
 
-function getWindowListAsJson() {
-    let wins = window.require('native-sgrab-helper').windowListAsJson();
-    debug(wins);
-    return wins;
+const windowListAsJson = window.require('native-sgrab-helper').windowListAsJson
+
+debug('loaded');
+
+function updateSystemWindows() {
+    updateCurrentSystemWindows(windowListAsJson());
 }
 
-debug('loaded')
+function setupWindowListHelper() {
+    setInterval( updateSystemWindows, 500)
+}
 
 
-let SystemWindowList = React.createClass({
-    render: function()  {
-        debug('rendering component');
-        let windowList = _.filter(getWindowListAsJson(), (it) => it.layer == 0);
-        console.log(windowList);
+const validState = (state) => {
+    return (state !== null)
+}
 
-        let renderedItems = _.map(windowList, (it) => {
-            return (
-                <SystemWindowListItem item={it} />
-            )});
+setupWindowListHelper()
 
-        return(
-                <div className="ui divided items">{renderedItems}</div>
-        )
+export default class SystemWindowList extends React.Component {
+    getInitialState() {
+        AppStore.getState();
     }
-});
 
-module.exports = { SystemWindowList }
+    onStoreChange(state) {
+        this.setState(state)
+    }
+
+    componentDidMount() {
+        AppStore.listen(this.onStoreChange.bind(this))
+    }
+
+    componentWillUnmount() {
+        AppStore.unlisten(this.onStoreChange.bind(this))
+    }
+
+    render()  {
+        debug("Rendering state");
+        debug(this.state);
+
+        if(validState(this.state)) {
+            let windowList = this.state.currentSystemWindows
+            let renderedItems = _.map(windowList, (it, idx) => {
+                return (
+                    <SystemWindowListItem item={it} key={idx} />
+                )});
+
+            return(
+                <div className="ui divided items">{renderedItems}</div>
+            )
+        } else {
+            return <div> no windows yet </div>
+        }
+    }
+}

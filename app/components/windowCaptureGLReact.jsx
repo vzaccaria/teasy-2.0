@@ -11,7 +11,6 @@ let nsh = window.require('native-sgrab-helper');
 window.grabHelper = nsh;
 
 import _debug from 'debug';
-_debug.enable('app:*');
 const debug = _debug('app:components/windowCapture');
 
 function getWindowBufferFromWid(wid, width, height) {
@@ -22,39 +21,69 @@ function getWindowBufferFromWid(wid, width, height) {
 
 debug('loaded');
 
+function isDynamic(props) {
+    return !_.isUndefined(props.dynamic) && _.isEqual(props.dynamic, "1");
+}
+
 let WindowCapture = React.createClass({
 
-    refreshImageBuffer: function() {
-        let width = parseInt(this.props.width);
-        let height = parseInt(this.props.height);
-        let wid = parseInt(this.props.wid);
+    refreshImageBuffer: function(props) {
+        let width = parseInt(props.width);
+        let height = parseInt(props.height);
+        let wid = parseInt(props.wid);
         debug(width, height, wid);
         let { buf, cols, rows } = getWindowBufferFromWid(wid, width, height);
         debug(cols, rows);
-        this.setState({buf: ndarray(buf, [rows, cols, 4]).transpose(1,0), width: cols, height: rows});
+        this.setState({
+            buf: ndarray(buf, [rows, cols, 4]).transpose(1,0),
+            width: cols,
+            height: rows,
+            time: Date.now()
+        });
     },
 
     getInitialState: function() {
-        return { buf: undefined, width: 1, height: 1 };
+        return {
+            buf: undefined,
+            width: 1,
+            height: 1,
+            time: Date.now()
+        };
     },
 
     componentDidMount: function() {
-        debug('mounting');
-        if(!_.isUndefined(this.props.dynamic) && this.props.dynamic==="1") {
-            setInterval(this.refreshImageBuffer.bind(this), 1000);
+        if(isDynamic(this.props)) {
+            setInterval(() => {
+                this.refreshImageBuffer(this.props);
+            }, 1000);
         } else {
-            this.refreshImageBuffer();
+            this.refreshImageBuffer(this.props);
         }
     },
 
+    componentWillReceiveProps: function(props) {
+        this.refreshImageBuffer(props);
+    },
+
+    shouldComponentUpdate: function(np, ns) {
+        var bufChanged = _.isUndefined(this.state.buf) && !_.isUndefined(ns.buf);
+        var propsChanged = !(_.isEqual(np, this.props));
+        var timeChanged = (ns.time !== this.state.time);
+        var shouldUpdate = propsChanged || bufChanged || (isDynamic(this.props) && timeChanged);
+        return shouldUpdate;
+    },
+
     render: function()  {
-        if(_.isUndefined(this.state.buf)) {
-            return (<div>no buf</div>);
-        } else {
-            return (
-                <GLDisplayUintBuf width={this.props.width} height={this.props.height} image={this.state.buf}/>
-            );
-        }
+            if(_.isUndefined(this.state.buf)) {
+                return (<div>no buf</div>);
+            } else {
+                return (
+                    <GLDisplayUintBuf
+                        width={this.props.width}
+                        height={this.props.height}
+                        image={this.state.buf}/>
+                );
+            }
     }
 
 });
