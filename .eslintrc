@@ -3,7 +3,8 @@
   "env": {
     "es6": true,
     "node": true,
-    "shelljs": true
+    "shelljs": true,
+    "browser": true
   },
   "extends": "eslint:recommended",
   "rules": {
