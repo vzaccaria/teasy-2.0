@@ -1,4 +1,5 @@
 const xWidth = 300;
+const yFromTop = '50px'
 
 const getPreviewSize = (window) => {
     return {
@@ -11,19 +12,27 @@ const WindowListStyle = (window) => {
     return {
         boxSizing: 'border-box',
         width: xWidth,
-        height: window.size.height,
-        borderRight: '1px solid gray'
+        position: 'relative',
+        top: yFromTop,
+        minHeight: window.size.height,
+        height: '100%',
+        borderRight: '1px solid gray',
+        cursor: 'pointer'
     }
 }
 
 const PreviewStyle = {
     bxSizing: 'border-box',
     position: 'fixed',
-    top: '0',
+    top: yFromTop,
     left: xWidth,
     height: '100%'
 }
 
+const MenuStyle = {
+
+}
+
 module.exports = {
-    WindowListStyle, PreviewStyle, getPreviewSize
+    WindowListStyle, PreviewStyle, getPreviewSize, MenuStyle
 }

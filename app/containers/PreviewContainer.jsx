@@ -14,7 +14,8 @@ const validState = (state) => {
 
 export default class PreviewContainer extends React.Component {
 
-    getInitialState() {
+    constructor() {
+        super();
         AppStore.getState();
     }
 
@@ -52,7 +53,7 @@ export default class PreviewContainer extends React.Component {
 
             return (
                 <div>
-                    <div className="ui container">
+                    <div style={{ padding: '20px'}} className="ui container">
                             <div className="sixteen wide column"> {hd} </div>
                     </div>
                     <WindowCapture width={width} height={height} wid={clw} dynamic="1" />

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import LiveWinContainer from './containers/LiveWinContainer';
 import { updateWindowSize } from './actions/LiveWinAppActions';
@@ -18,6 +19,6 @@ function registerListeners() {
 }
 
 
-React.render(<LiveWinContainer/>, document.getElementById('react-live-win-root'));
+ReactDOM.render(<LiveWinContainer/>, document.getElementById('react-live-win-root'));
 
 registerListeners()

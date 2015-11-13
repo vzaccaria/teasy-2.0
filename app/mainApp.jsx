@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom'
 import AppContainer from './containers/AppContainer';
 import { updateWindowSize } from './actions/AppActions';
 
@@ -8,6 +9,7 @@ import _debug from 'debug';
 const debug = _debug('app:mainApp');
 
 window.$mine = { }
+window.Perf = require('react-addons-perf')
 window.$mine.enableDebugAll  = () => { _debug.enable('app:*') }
 window.$mine.disableDebugAll = () => { _debug.disable('app:*') }
 
@@ -27,6 +29,6 @@ function attachListeners() {
 
 
 
-React.render(<AppContainer/>, document.getElementById('react-root'));
+ReactDOM.render(<AppContainer/>, document.getElementById('react-root'));
 
 attachListeners()

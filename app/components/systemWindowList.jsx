@@ -28,7 +28,8 @@ const validState = (state) => {
 setupWindowListHelper()
 
 export default class SystemWindowList extends React.Component {
-    getInitialState() {
+    constructor() {
+        super();
         AppStore.getState();
     }
 
@@ -44,6 +45,13 @@ export default class SystemWindowList extends React.Component {
         AppStore.unlisten(this.onStoreChange.bind(this))
     }
 
+    shouldComponentUpdate(np, ns) {
+        var propsChanged  = !_.isEqual(np, this.props);
+        var stateChanged = !_.isEqual(ns, this.state);
+        return propsChanged || stateChanged;
+
+        }
+
     render()  {
         debug("Rendering state");
         debug(this.state);
@@ -51,8 +59,9 @@ export default class SystemWindowList extends React.Component {
         if(validState(this.state)) {
             let windowList = this.state.currentSystemWindows
             let renderedItems = _.map(windowList, (it, idx) => {
+                var selected = (it.wid === this.state.currentLiveWindow) ? "true" : "false"
                 return (
-                    <SystemWindowListItem item={it} key={idx} />
+                    <SystemWindowListItem item={it} key={idx} selected={selected}/>
                 )});
 
             return(

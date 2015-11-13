@@ -12,6 +12,20 @@ const debug = _debug('app:components/systemWindowListItem');
 
 debug('lodaded');
 
+function getStyle(props, state) {
+        var selectedState = {
+            background: color("#FFFFFF").darken(0.03).hexString(),
+        }
+        var style = []
+        if(props.selected === "true") {
+            style = [ selectedState ]
+        } else {
+            style = [ ]
+        }
+    return style;
+
+}
+
 @Radium
 export default class SystemWindowListItem extends React.Component {
 
@@ -27,15 +41,10 @@ export default class SystemWindowListItem extends React.Component {
     }
 
     render() {
-        var shortName = S(this.props.item.name).truncate(30).s
-        const hoverOnIt = {
-            ':hover': {
-                background: color("#FFFFFF").darken(0.05).hexString()
-            },
-            cursor: 'pointer'
-        };
+        var shortName = S(this.props.item.name).truncate(30).s;
+        var style = getStyle(this.props, this.state);
         return (
-            <div style={hoverOnIt} className="item" onClick={this.clicked.bind(this)}>
+            <div style={style} className="item" onClick={this.clicked.bind(this)}>
                 <div className="ui tiny image">
                     <WindowCapture key={this.props.key} width="70" height="70" wid={this.props.item.wid}  dynamic="0"/>
                 </div>

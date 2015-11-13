@@ -3,7 +3,7 @@ import SystemWindowList from '../components/systemWindowList';
 import PreviewContainer from './PreviewContainer'
 import AppStore from '../stores/AppStore';
 
-import { WindowListStyle, PreviewStyle } from '../styles/Layout.js'
+import { WindowListStyle, PreviewStyle, MenuStyle } from '../styles/Layout.js'
 
 import _debug from 'debug';
 const debug = _debug('app:containers/AppContainer');
@@ -11,12 +11,13 @@ const debug = _debug('app:containers/AppContainer');
 debug('loaded!!');
 
 const validState = (state) => {
-   return (state !== null)
+    return (state !== null)
 }
 
 export default class AppContainer extends React.Component {
 
-    getInitialState() {
+    constructor() {
+        super();
         AppStore.getState();
     }
 
@@ -34,20 +35,25 @@ export default class AppContainer extends React.Component {
 
     render() {
         debug("Rendering")
-        if(validState(this.state)) {
-            return (
-                <div>
-                    <div style={WindowListStyle(this.state.window)}>
-                        <SystemWindowList />
+            if(validState(this.state)) {
+                return (
+                    <div>
+                        <div className="ui top menu fixed">
+                            <h3 className="item"> Teasy 2.0 </h3>
+                        </div>
+                        <div>
+                            <div style={WindowListStyle(this.state.window)}>
+                                <SystemWindowList />
+                            </div>
+                            <div style={PreviewStyle}>
+                                <PreviewContainer />
+                            </div>
+                        </div>
                     </div>
-                    <div style={PreviewStyle}>
-                        <PreviewContainer />
-                    </div>
-                </div>
-            );
-        } else {
-            return <div> not ready yet </div>
-        }
+                );
+            } else {
+                return <div> not ready yet </div>
+            }
     }
 
 }
