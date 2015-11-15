@@ -6,7 +6,7 @@ import _ from 'lodash'
 
 import { GLDisplayUintBuf } from './GLDisplayUintBuf';
 
-let nsh = window.require('native-sgrab-helper');
+const nsh = window.require('./utils/native-sgrab-helper')
 
 window.grabHelper = nsh;
 

@@ -4,7 +4,7 @@ var AppActions = require('../actions/AppActions');
 
 import _debug from 'debug';
 const debug = _debug('app:stores/AppStore.jsx');
-const windowListAsJson = window.require('native-sgrab-helper').windowListAsJson
+const windowListAsJson = window.require('./utils/native-sgrab-helper').windowListAsJson
 
 debug('loaded');
 

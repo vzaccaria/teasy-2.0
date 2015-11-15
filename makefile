@@ -1,6 +1,9 @@
 all: build
 
-build:
+run:
+		./node_modules/.bin/electron .
+
+compile:
 		./node_modules/.bin/webpack --config ./webpack/webpack-dev-server.config.js
 
 dev: build
@@ -17,3 +20,6 @@ stop:
 restart:
 		make stop
 		make hot
+
+build-native:
+		HOME=~/.electron-gyp node-gyp rebuild --target=0.33.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell

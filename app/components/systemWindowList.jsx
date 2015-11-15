@@ -8,7 +8,7 @@ import AppStore from '../stores/AppStore'
 import _debug from 'debug';
 const debug = _debug('app:components/systemWindowList');
 
-const windowListAsJson = window.require('native-sgrab-helper').windowListAsJson
+const windowListAsJson = window.require('./utils/native-sgrab-helper').windowListAsJson
 
 debug('loaded');
 
