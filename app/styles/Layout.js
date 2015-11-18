@@ -1,5 +1,6 @@
+import color from 'color'
 const xWidth = 300;
-const yFromTop = '50px'
+const yFromTop = 40;
 
 const getPreviewSize = (window) => {
     return {
@@ -8,16 +9,19 @@ const getPreviewSize = (window) => {
     }
 }
 
+const dividerGray = color('#FFFFFF').darken(0.1).hexString()
+
 const WindowListStyle = (window) => {
     return {
         boxSizing: 'border-box',
         width: xWidth,
         position: 'relative',
         top: yFromTop,
-        minHeight: window.size.height,
+        minHeight: window.size.height - yFromTop,
         height: '100%',
-        borderRight: '1px solid gray',
-        cursor: 'pointer'
+        borderRight: `1px solid ${dividerGray}`,
+        cursor: 'pointer',
+        background: color('#FFFFFF').darken(0.05).hslString()
     }
 }
 
@@ -34,5 +38,5 @@ const MenuStyle = {
 }
 
 module.exports = {
-    WindowListStyle, PreviewStyle, getPreviewSize, MenuStyle
+    WindowListStyle, PreviewStyle, getPreviewSize, MenuStyle, dividerGray
 }

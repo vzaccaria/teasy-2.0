@@ -12,6 +12,10 @@ const validState = (state) => {
     return (!_.isNull(state) && !_.isUndefined(state) && state.currentLiveWindow !== 0)
 }
 
+const windowNotSet = (state) => {
+    return (!_.isNull(state) && !_.isUndefined(state) && state.currentLiveWindow === 0)
+}
+
 export default class PreviewContainer extends React.Component {
 
     constructor() {
@@ -54,13 +58,36 @@ export default class PreviewContainer extends React.Component {
             return (
                 <div>
                     <div style={{ padding: '20px'}} className="ui container">
-                            <div className="sixteen wide column"> {hd} </div>
+                        <div className="sixteen wide column"> {hd} </div>
                     </div>
                     <WindowCapture width={width} height={height} wid={clw} dynamic="1" />
                 </div>
             );}
         else {
-            return <div> cant render anything here </div>;
+            if(windowNotSet(this.state)) {
+                let { width, height } = getPreviewSize(this.state.window.size);
+                let cstyle = {
+                    width: width,
+                    height: height,
+                    paddingTop: height/3
+                };
+                return (
+                    <div style={cstyle} className="ui equal width center aligned padded grid">
+                        <div className="row">
+                            <div className="column">
+                                <div> No window selected! </div>
+                                <p> Please choose a window from the left</p>
+                            </div>
+                        </div>
+                    </div>);
+            } else {
+                return (
+                    <div className="ui inverted active dimmer">
+                        <div className="ui text loader">
+                            Initializing
+                        </div>
+                    </div>)
+            }
         }
     }
 }

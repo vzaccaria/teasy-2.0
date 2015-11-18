@@ -1,5 +1,6 @@
 import React from 'react';
 import { WindowCapture } from '../components/windowCaptureGLReact.jsx';
+import moment from 'moment'
 import LiveWinAppStore from '../stores/LiveWinAppStore'
 import _ from 'lodash'
 
@@ -33,14 +34,30 @@ export default class PreviewContainer extends React.Component {
         if(validState(this.state)) {
             return (
                 <div>
+                    <div className="ui inverted menu fixed">
+                        <div className="item"> Teasy 2.0 </div>
+                        <div className="right menu">
+                            <div className="item">
+                                {moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                            </div>
+                        </div>
+                    </div>
+
                     <WindowCapture
                         width={this.state.window.size.width}
                         height={this.state.window.size.height}
                         wid={this.state.currentLiveWindow} dynamic="1" />
                 </div>
-            );}
+            );
+        }
         else {
-            return <div> sorry nothing to render...</div>;
+            return (<div className="ui active dimmer">
+                    <div className="ui text loader">
+                        Waiting for connection
+                    </div>
+                    <p> </p>
+            </div>
+            );
         }
     }
 }

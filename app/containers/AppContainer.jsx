@@ -2,6 +2,7 @@ import React from 'react';
 import SystemWindowList from '../components/systemWindowList';
 import PreviewContainer from './PreviewContainer'
 import AppStore from '../stores/AppStore';
+import moment from 'moment'
 
 import { WindowListStyle, PreviewStyle, MenuStyle } from '../styles/Layout.js'
 
@@ -38,8 +39,13 @@ export default class AppContainer extends React.Component {
             if(validState(this.state)) {
                 return (
                     <div>
-                        <div className="ui top menu fixed">
-                            <h3 className="item"> Teasy 2.0 </h3>
+                        <div className="ui inverted menu fixed">
+                            <div className="item"> Teasy 2.0 </div>
+                            <div className="right menu">
+                                <div className="item">
+                                    {moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                                </div>
+                            </div>
                         </div>
                         <div>
                             <div style={WindowListStyle(this.state.window)}>
@@ -52,7 +58,14 @@ export default class AppContainer extends React.Component {
                     </div>
                 );
             } else {
-                return <div> not ready yet </div>
+
+                return (
+                    <div className="ui inverted active dimmer">
+                        <div className="ui text loader">
+                            Initializing
+                        </div>
+                    </div>)
+
             }
     }
 
