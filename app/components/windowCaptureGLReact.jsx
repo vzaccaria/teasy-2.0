@@ -1,12 +1,10 @@
 import React from 'react';
 import ndarray from 'ndarray';
 import _ from 'lodash'
-
-//import { computeAllPosAndSizeNoFit } from 'image-data-resizer';
-
 import { GLDisplayUintBuf } from './GLDisplayUintBuf';
+import Loader from './loader'
 
-const nsh = window.require('./utils/native-sgrab-helper')
+const nsh = window.require('./utils/native-sgrab-helper');
 
 window.grabHelper = nsh;
 
@@ -16,7 +14,6 @@ const debug = _debug('app:components/windowCapture');
 function getWindowBufferFromWid(wid, width, height) {
     return nsh.nativeSgrabHelper.getImageBufferResized(wid, width, height);
 }
-
 
 
 debug('loaded');
@@ -74,16 +71,20 @@ let WindowCapture = React.createClass({
     },
 
     render: function()  {
-            if(_.isUndefined(this.state.buf)) {
-                return (<div>no buf</div>);
-            } else {
-                return (
-                    <GLDisplayUintBuf
-                        width={this.props.width}
-                        height={this.props.height}
-                        image={this.state.buf}/>
-                );
+        if(_.isUndefined(this.state.buf)) {
+            let s = {
+                width: this.props.width,
+                height: this.props.height
             }
+            return (<Loader style={s} inverted="1" message="Rendering.." />);
+        } else {
+            return (
+                <GLDisplayUintBuf
+                    width={this.props.width}
+                    height={this.props.height}
+                    image={this.state.buf}/>
+            );
+        }
     }
 
 });

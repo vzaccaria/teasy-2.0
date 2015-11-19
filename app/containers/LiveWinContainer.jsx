@@ -2,6 +2,7 @@ import React from 'react';
 import { WindowCapture } from '../components/windowCaptureGLReact.jsx';
 import moment from 'moment'
 import LiveWinAppStore from '../stores/LiveWinAppStore'
+import Loader from '../components/loader';
 import _ from 'lodash'
 
 import _debug from 'debug';
@@ -51,13 +52,7 @@ export default class PreviewContainer extends React.Component {
             );
         }
         else {
-            return (<div className="ui active dimmer">
-                    <div className="ui text loader">
-                        Waiting for connection
-                    </div>
-                    <p> </p>
-            </div>
-            );
+            return <Loader message="Waiting for connection" />;
         }
     }
 }

@@ -3,6 +3,8 @@ import { WindowCapture } from '../components/windowCaptureGLReact.jsx';
 import AppStore from '../stores/AppStore'
 import _ from 'lodash'
 import { getPreviewSize } from '../styles/Layout'
+import AppActions from '../actions/AppActions'
+import Loader from '../components/loader'
 // Debug..
 
 import _debug from 'debug';
@@ -35,9 +37,15 @@ export default class PreviewContainer extends React.Component {
         AppStore.unlisten(this.onStoreChange.bind(this))
     }
 
+    close() {
+        AppActions.updateCurrentLiveWindow(0);
+    }
+
+
     render() {
         debug('rendering container');
         if(validState(this.state)) {
+
             var width = 400;
             var height = 200
             var s = getPreviewSize(this.state.window.size);
@@ -61,7 +69,7 @@ export default class PreviewContainer extends React.Component {
                         <div className="sixteen wide column"> {hd} </div>
                         <div className="ui container">
                         <button className="ui button"><i className="expand icon"></i> Expand </button>
-                        <button className="ui button"><i className="remove icon"></i> Close </button>
+                        <button className="ui button" onClick={this.close}><i className="remove icon"></i> Close </button>
                         </div>
                     </div>
                     <WindowCapture width={width} height={height} wid={clw} dynamic="1" />
@@ -85,12 +93,7 @@ export default class PreviewContainer extends React.Component {
                         </div>
                     </div>);
             } else {
-                return (
-                    <div className="ui inverted active dimmer">
-                        <div className="ui text loader">
-                            Initializing
-                        </div>
-                    </div>)
+                return <Loader message="Initializing" />
             }
         }
     }
