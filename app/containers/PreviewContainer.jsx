@@ -57,8 +57,12 @@ export default class PreviewContainer extends React.Component {
 
             return (
                 <div>
-                    <div style={{ padding: '20px'}} className="ui container">
+                    <div style={{ padding: '20px'}} className="ui">
                         <div className="sixteen wide column"> {hd} </div>
+                        <div className="ui container">
+                        <button className="ui button"><i className="expand icon"></i> Expand </button>
+                        <button className="ui button"><i className="remove icon"></i> Close </button>
+                        </div>
                     </div>
                     <WindowCapture width={width} height={height} wid={clw} dynamic="1" />
                 </div>
