@@ -58,13 +58,9 @@ export default class AppContainer extends React.Component {
                     </div>
                 );
             } else {
-
                 return (
-                    <div className="ui inverted active dimmer">
-                        <div className="ui text loader">
-                            Initializing
-                        </div>
-                    </div>)
+                    <div> </div>
+                    );
 
             }
     }

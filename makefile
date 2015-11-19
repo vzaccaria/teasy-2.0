@@ -4,7 +4,7 @@ run:
 		./node_modules/.bin/electron .
 
 compile:
-		./node_modules/.bin/webpack --config ./webpack/webpack-dev-server.config.js
+		./node_modules/.bin/webpack --config ./webpack/webpack.config.production.js
 
 dev: build
 		npm run dev-server &
@@ -23,3 +23,7 @@ restart:
 
 build-native:
 		HOME=~/.electron-gyp node-gyp rebuild --target=0.33.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell
+
+package: compile
+	cp ./assets/TeasyIcon.icns ./app/app.icns
+	node package.js
