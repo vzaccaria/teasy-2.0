@@ -24,19 +24,27 @@ function isDynamic(props) {
 
 let WindowCapture = React.createClass({
 
-    refreshImageBuffer: function(props) {
-        let width = parseInt(props.width);
-        let height = parseInt(props.height);
-        let wid = parseInt(props.wid);
-        debug(width, height, wid);
-        let { buf, cols, rows } = getWindowBufferFromWid(wid, width, height);
-        debug(cols, rows);
-        this.setState({
-            buf: ndarray(buf, [rows, cols, 4]).transpose(1,0),
-            width: cols,
-            height: rows,
-            time: Date.now()
-        });
+    refreshImageBuffer: function(props, update) {
+        if(this.state.mounted) {
+            let width = parseInt(props.width);
+            let height = parseInt(props.height);
+            let wid = parseInt(props.wid);
+            let refreshPeriod = parseInt(props.refreshPeriod) || 1000;
+
+            debug(width, height, wid);
+            let { buf, cols, rows } = getWindowBufferFromWid(wid, width, height);
+            debug(cols, rows);
+            this.setState({
+                buf: ndarray(buf, [rows, cols, 4]).transpose(1,0),
+                width: cols,
+                height: rows,
+                time: Date.now()
+            });
+            if(update && this.state.mounted) {
+                setTimeout(() => {
+                    this.refreshImageBuffer(this.props, true);
+                }, refreshPeriod);
+            }}
     },
 
     getInitialState: function() {
@@ -44,22 +52,21 @@ let WindowCapture = React.createClass({
             buf: undefined,
             width: 1,
             height: 1,
-            time: Date.now()
+            time: Date.now(),
+            mounted: true
         };
     },
 
     componentDidMount: function() {
-        if(isDynamic(this.props)) {
-            setInterval(() => {
-                this.refreshImageBuffer(this.props);
-            }, 1000);
-        } else {
-            this.refreshImageBuffer(this.props);
-        }
+        this.refreshImageBuffer(this.props, isDynamic(this.props))
+    },
+
+    componentWillUnmount: function() {
+        this.state.mounted = false;
     },
 
     componentWillReceiveProps: function(props) {
-        this.refreshImageBuffer(props);
+        this.refreshImageBuffer(props, false);
     },
 
     shouldComponentUpdate: function(np, ns) {
