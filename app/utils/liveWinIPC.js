@@ -1,23 +1,25 @@
 var ipc = require('ipc');
 
-var { updateCurrentLiveWindow } = require('../actions/LiveWinAppActions');
+var { updateRemoteState } = require('../actions/LiveWinAppActions');
 
 import _debug from 'debug';
 const debug = _debug('liveWinApp:utils/liveWinIPC');
 
-function sendWidChange(wid) {
-    ipc.send('update-current-live-window', { wid });
+function sendStateChange(state) {
+    ipc.send('update-state', { state });
 }
 
-function listenToWidChange() {
-    debug("Registering IPC handler")
-    ipc.on('update-current-live-window', function({wid}) {
-        updateCurrentLiveWindow(wid);
+function listenToStateChange() {
+    ipc.on('update-state', function({state}) {
+        debug('received updated state')
+        debug(state)
+        updateRemoteState(state);
     });
 }
 
 
+
 module.exports = {
-    listenToWidChange,
-    sendWidChange
+    sendStateChange,
+    listenToStateChange
 }

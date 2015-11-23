@@ -16,8 +16,8 @@ app.on('window-all-closed', function() {
 });
 
 function byPassWidChange(w2) {
-    ipc.on('update-current-live-window', function(event, arg) {
-        w2.webContents.send('update-current-live-window', arg);
+    ipc.on('update-state', function(event, arg) {
+        w2.webContents.send('update-state', arg);
     })
 }
 

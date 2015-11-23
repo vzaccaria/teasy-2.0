@@ -9,12 +9,13 @@ import _debug from 'debug';
 const debug = _debug('app:containers/LiveWinContainer');
 
 const validState = (state) => {
-    return (!_.isNull(state) && !_.isUndefined(state) && state.currentLiveWindow !== 0)
+    return _.get(state, 'remoteState.currentLiveWindow', false);
 }
 
-export default class PreviewContainer extends React.Component {
+export default class LiveWinContainer extends React.Component {
 
-    getInitialState() {
+    constructor() {
+        super()
         LiveWinAppStore.getState();
     }
 
@@ -47,7 +48,7 @@ export default class PreviewContainer extends React.Component {
                     <WindowCapture
                         width={this.state.window.size.width}
                         height={this.state.window.size.height}
-                        wid={this.state.currentLiveWindow} dynamic="1" />
+                        wid={this.state.remoteState.currentLiveWindow} dynamic="1" />
                 </div>
             );
         }

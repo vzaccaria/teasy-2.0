@@ -8,8 +8,8 @@ debug('loaded')
 class LiveWinAppActions {
     constructor() {
         this.generateActions(
-            'updateCurrentLiveWindow',
-            'updateWindowSize' /* Use commas to add actions */
+            'updateWindowSize', /* Use commas to add actions */
+            'updateRemoteState'
         )
     }
 }

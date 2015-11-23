@@ -11,12 +11,12 @@ class AppActions {
         this.generateActions(
             /* Easier - comma separated list of methods.. */
             'updateWindowSize', /* Use commas to add actions */
-            'updateCurrentSystemWindows'
+            'updateCurrentSystemWindows',
+            'updateLiveViewTime'
         )
     }
 
     updateCurrentLiveWindow(wid) {
-        sendWidChange(wid);
         this.dispatch(wid);
     }
 }
