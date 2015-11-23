@@ -76,7 +76,7 @@ let WindowCapture = React.createClass({
                 width: this.props.width,
                 height: this.props.height
             }
-            return (<Loader style={s} inverted="1" message="Rendering.." />);
+            return (<Loader style={s} message="Rendering.." />);
         } else {
             return (
                 <GLDisplayUintBuf
