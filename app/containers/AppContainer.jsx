@@ -3,6 +3,7 @@ import SystemWindowList from '../components/systemWindowList';
 import PreviewContainer from './PreviewContainer'
 import AppStore from '../stores/AppStore';
 import moment from 'moment'
+import { asPopup } from '../components/popup'
 
 import { WindowListStyle, PreviewStyle, MenuStyle } from '../styles/Layout.js'
 
@@ -14,6 +15,7 @@ debug('loaded!!');
 const validState = (state) => {
     return (state !== null)
 }
+
 
 export default class AppContainer extends React.Component {
 
@@ -43,7 +45,7 @@ export default class AppContainer extends React.Component {
                             <div className="item"> Teasy 2.0 </div>
                             <div className="right menu">
                                 <div className="item">
-                                    {moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                                    {moment().format("dddd Do MMMM YYYY, h:mm:ss a")}
                                 </div>
                             </div>
                         </div>

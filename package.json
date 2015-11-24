@@ -83,6 +83,7 @@
     "html-loader": "^0.3.0",
     "image-data-resizer": "^0.1.0",
     "is-electron-renderer": "^2.0.0",
+    "jquery": "^2.1.4",
     "json-loader": "^0.5.3",
     "keymirror": "^0.1.1",
     "lodash": "^3.10.1",
@@ -91,7 +92,9 @@
     "ndarray": "^1.0.18",
     "object-assign": "^4.0.1",
     "radium": "^0.14.3",
-    "react-dom": "^0.14.2",
+    "react": "^0.14.3",
+    "react-addons-pure-render-mixin": "^0.14.3",
+    "react-dom": "^0.14.3",
     "string": "^3.3.1",
     "three": "^0.73.0",
     "webgl-context": "^2.2.0"

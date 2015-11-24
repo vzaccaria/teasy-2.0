@@ -2,6 +2,7 @@ var _ = require('lodash')
 var alt = require('../utils/alt');
 var AppActions = require('../actions/AppActions');
 import { sendStateChange } from '../utils/liveWinIPC'
+import moment from 'moment'
 
 import _debug from 'debug';
 const debug = _debug('app:stores/AppStore.jsx');
@@ -17,7 +18,8 @@ class AppStore {
         this.window = { size: { width: window.innerWidth, height: window.innerHeight } }
         this.liveView = {
             time: {
-                showTime: false
+                showTime: false,
+                breakTime: undefined
             }
         }
         this.currentSystemWindows = windowListAsJson();
@@ -47,6 +49,14 @@ class AppStore {
     updateWindowSize(size) {
         this.window.size = size;
         sendStateChange(this)
+    }
+
+    setBreakTime({minutesFromNow}) {
+        this.liveView.breakTime = moment().add(minutesFromNow, "minute").format("HH:mm")
+    }
+
+    clearBreakTime() {
+        this.liveView.breakTime = undefined;
     }
 }
 

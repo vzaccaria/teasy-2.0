@@ -18,7 +18,7 @@ function updateSystemWindows() {
 }
 
 function setupWindowListHelper() {
-    setInterval( updateSystemWindows, 500)
+    setInterval( updateSystemWindows, 1000)
 }
 
 const validState = (state) => {

@@ -4,11 +4,16 @@ import moment from 'moment'
 import LiveWinAppStore from '../stores/LiveWinAppStore'
 import Loader from '../components/loader';
 import _ from 'lodash'
+import Time from '../components/time';
 
 import _debug from 'debug';
 const debug = _debug('app:containers/LiveWinContainer');
 
-const validState = (state) => {
+const showTime = (state) => {
+    return _.get(state, 'remoteState.liveView.time.showTime', false);
+}
+
+const showWindow = (state) => {
     return _.get(state, 'remoteState.currentLiveWindow', false);
 }
 
@@ -16,7 +21,7 @@ export default class LiveWinContainer extends React.Component {
 
     constructor() {
         super()
-        LiveWinAppStore.getState();
+            LiveWinAppStore.getState();
     }
 
     onStoreChange(state) {
@@ -33,14 +38,14 @@ export default class LiveWinContainer extends React.Component {
 
     render() {
         debug('rendering container');
-        if(validState(this.state)) {
+        if(showWindow(this.state) && !showTime(this.state)) {
             return (
                 <div>
                     <div className="ui inverted menu fixed">
                         <div className="item"> Teasy 2.0 </div>
                         <div className="right menu">
                             <div className="item">
-                                {moment().format("dddd, MMMM Do YYYY, h:mm:ss a")}
+                                {moment().format("dddd Do MMMM YYYY, h:mm:ss a")}
                             </div>
                         </div>
                     </div>
@@ -51,9 +56,13 @@ export default class LiveWinContainer extends React.Component {
                         wid={this.state.remoteState.currentLiveWindow} dynamic="1" />
                 </div>
             );
-        }
-        else {
-            return <Loader message="Waiting for connection" />;
+        } else {
+            if(showTime(this.state)) {
+                return <Time asDimmer={true} state={this.state.remoteState} > </Time>
+            }
+            else {
+                return <Loader message="Waiting for connection" />;
+            }
         }
     }
 }

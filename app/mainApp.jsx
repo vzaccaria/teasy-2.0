@@ -9,7 +9,6 @@ import _debug from 'debug';
 const debug = _debug('app:mainApp');
 
 window.$mine = { }
-window.Perf = require('react-addons-perf')
 window.$mine.enableDebugAll  = () => { _debug.enable('app:*') }
 window.$mine.disableDebugAll = () => { _debug.disable('app:*') }
 

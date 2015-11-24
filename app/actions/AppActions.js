@@ -12,7 +12,9 @@ class AppActions {
             /* Easier - comma separated list of methods.. */
             'updateWindowSize', /* Use commas to add actions */
             'updateCurrentSystemWindows',
-            'updateLiveViewTime'
+            'updateLiveViewTime',
+            'setBreakTime',
+            'clearBreakTime'
         )
     }
 
