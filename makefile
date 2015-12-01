@@ -27,3 +27,6 @@ build-native:
 package: compile
 	cp ./assets/TeasyIcon.icns ./app/app.icns
 	node package.js
+
+install:
+	cp -R ./release/darwin-x64/Teasy\ 2.0-darwin-x64/Teasy\ 2.0.app ~/Applications
