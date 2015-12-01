@@ -9,16 +9,11 @@ let timeChoices = [
     { key: '10m', value: 10, display: '10 minutes' },
     { key: '20m', value: 20, display: '20 minutes' }
 ];
-//
-//                {_.map(timeChoices, (e) => {
-//                    <a onClick={() => {setBreakTime({minutesFromNow: e.value})}}>
-//                    {e.display}
-//                    </a>
-                   //                 })}
 
 function renderItem(it) {
+    let style = {width: '8rem', cursor: 'pointer', marginTop: '0.5rem', marginBottom: '0.5rem'} ;
     return (
-        <div key={it.key} style={{cursor: 'pointer'}} onClick={() => setBreakTime({minutesFromNow: it.value})}>
+        <div className="ui button" key={it.key} style={style} onClick={() => setBreakTime({minutesFromNow: it.value})}>
             {it.display}
         </div>);
 }
