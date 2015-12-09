@@ -9,20 +9,21 @@ var webpackTargetElectronRenderer = require('webpack-target-electron-renderer');
 var projectRoot = path.join(__dirname, '..');
 var appRoot = path.join(projectRoot, 'app');
 
+//                 path.resolve(__dirname, "../node_modules/gl-react")
+
+
 module.exports = function(opts) {
     var entry = {
         main: opts.prerender ? path.join(appRoot, 'mainApp') : path.join(appRoot, 'mainApp'),
         liveWin: path.join(appRoot, 'liveWinApp')
     };
 
-    console.log(path.resolve(__dirname, "../node_modules/gl-react"))
     var loaders = {
         'jsx': opts.hotComponents ? ['react-hot-loader', 'babel-loader'] : 'babel-loader',
         'js': {
             loader: 'babel-loader',
             include: [
-                appRoot,
-                path.resolve(__dirname, "../node_modules/gl-react")
+                appRoot
             ]
         },
         'json': 'json-loader',

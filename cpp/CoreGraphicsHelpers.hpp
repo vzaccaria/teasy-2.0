@@ -6,6 +6,7 @@
 #include <utility>
 #include <unistd.h>
 #include <vector>
+#include "OpenCVHelpers.hpp"
 
 typedef std::pair<std::string, CGWindowID> CGWindowInfo;
 typedef std::vector<CGWindowInfo> CGWindowInfoList;
@@ -15,7 +16,9 @@ typedef struct {
     unsigned long size;
     unsigned long rows;
     unsigned long cols;
+    CGWindowResizeInfo resizeInfo;
 } CGWindowBuffer;
+
 
 #define _wbuf(p, i, m) { p, i, m }
 #define _wbuf_getPointer(x)        (x.pointer)
@@ -25,6 +28,5 @@ std::string getWindowListAsJsonString();
 
 CGWindowID   getWindowID(std::string wname);
 CGImageRef   getWindowImage(CGWindowID windowId);
-CGWindowBuffer getImageAsBuffer(CGWindowID windowId);
 CGWindowBuffer getImageAsBufferResized(CGWindowID windowId, unsigned int, unsigned int);
 CGWindowBuffer convertImageRefToRGBA(CGImageRef imageRef);

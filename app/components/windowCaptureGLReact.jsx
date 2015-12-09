@@ -1,10 +1,14 @@
-import React from 'react';
+const GL = require("gl-react");
+const React = GL.React;
+
 import ndarray from 'ndarray';
 import _ from 'lodash'
 import { GLDisplayUintBuf } from './GLDisplayUintBuf';
+import { GLDisplayLaserPointer } from './GLDisplayLaserPointer';
 import Loader from './loader'
+const { Surface } = require("gl-react-dom")
 
-const nsh = window.require('./utils/native-sgrab-helper');
+    const nsh = window.require('./utils/native-sgrab-helper');
 
 window.grabHelper = nsh;
 
@@ -12,7 +16,8 @@ import _debug from 'debug';
 const debug = _debug('app:components/windowCapture');
 
 function getWindowBufferFromWid(wid, width, height) {
-    return nsh.nativeSgrabHelper.getImageBufferResized(wid, width, height);
+    window.$mine.currentLiveWindowData = nsh.nativeSgrabHelper.getImageBufferResized(wid, width, height);
+    return window.$mine.currentLiveWindowData;
 }
 
 
@@ -85,15 +90,29 @@ let WindowCapture = React.createClass({
             }
             return (<Loader style={s} message="Rendering.." />);
         } else {
-            return (
-                <GLDisplayUintBuf
-                    width={this.props.width}
-                    height={this.props.height}
-                    image={this.state.buf}/>
-            );
+            let size  = {
+                width: parseInt(this.props.width),
+                height: parseInt(this.props.height)
+            }
+            let active = _.get(this.props, "active", false);
+            if(active) {
+                return (
+                    <Surface {...size}  >
+                        <GLDisplayUintBuf {...size} image={this.state.buf}>
+                            <GLDisplayLaserPointer {...size} size={0.05} position={[1.0, 0.5]} />
+                        </GLDisplayUintBuf>
+                    </Surface>
+                );
+            } else {
+                return (
+                    <Surface {...size}>
+                        <GLDisplayUintBuf {...size} image={this.state.buf} />
+                    </Surface>);
+            }
         }
     }
 
 });
+
 
 module.exports = { WindowCapture }

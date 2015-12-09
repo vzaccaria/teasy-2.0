@@ -24,7 +24,7 @@ std::pair<cv::Rect, cv::Size> pad(cv::Mat & m, float padding) {
     return std::pair<cv::Rect, cv::Size>(rect, rectSize);
 }
 
-void resizeKeepAspectRatio(cv::Mat & in, cv::Mat & out) {
+CGWindowResizeInfo resizeKeepAspectRatio(cv::Mat & in, cv::Mat & out) {
     float wWidth = out.cols;
     float wHeight = out.rows;
     debugMat(out);
@@ -46,30 +46,30 @@ void resizeKeepAspectRatio(cv::Mat & in, cv::Mat & out) {
             ih = ih * ratio;
         }
     } else {
-        if(iw > ih) {
-            float ratio = wWidth/ iw;
-            iw = std::min(wWidth, iw * ratio);
-            ih = std::min(wHeight, ih * ratio);
+        float rw = wWidth / iw;
+        float rh = wHeight / ih;
+        if(rh > rw) {
+            iw = std::min(wWidth,  iw * rw);
+            ih = std::min(wHeight, ih * rw);
         } else {
-            float ratio = wHeight/ ih;
-            iw = std::min(wWidth, iw * ratio);
-            ih = std::min(wHeight, ih * ratio);
+            iw = std::min(wWidth,  iw * rh);
+            ih = std::min(wHeight, ih * rh);
         }
     }
     // (iw x ih) Actual image size that i) keeps AR and ii) fits into final view
-    int iiw = (int) iw;
-    int iih = (int) ih;
+    auto iiw = (unsigned long) iw;
+    auto iih = (unsigned long) ih;
 
     // (deltaW x deltaH) left-horizontal and top-vertical borders to fit final view
-    auto deltaW = std::max(0,(out.cols - iiw) >> 1);
-    auto deltaH = std::max(0,(out.rows - iih) >> 1);
+    auto deltaW = std::max<unsigned long>(0,(out.cols - iiw) >> 1);
+    auto deltaH = std::max<unsigned long>(0,(out.rows - iih) >> 1);
 
     cv::Mat dst1;
     resize(in, dst1, cvSize(iw, ih), 0, 0, cv::INTER_CUBIC);
 
     // (_wRem x _hRem) right-horizontal and bottom-vertical borders ("remainders")
-    auto _hRem = std::max(0, out.rows - deltaH - dst1.rows);
-    auto _wRem = std::max(0, out.cols - deltaW - dst1.cols);
+    auto _hRem = std::max<unsigned long>(0, out.rows - deltaH - dst1.rows);
+    auto _wRem = std::max<unsigned long>(0, out.cols - deltaW - dst1.cols);
 
     debugShouldEqual(out.rows, dst1.rows + deltaH + _hRem);
     debugShouldEqual(out.cols, dst1.cols + deltaW + _wRem);
@@ -77,19 +77,6 @@ void resizeKeepAspectRatio(cv::Mat & in, cv::Mat & out) {
     // Resize image 'dst1' into 'out'.
 
     copyMakeBorder(dst1, out, deltaH, _hRem, deltaW, _wRem, cv::BORDER_CONSTANT, 0);
-}
 
-// Helper function to put text in the center of a rectangle
-void centerText(cv::Mat& im, const std::string & label, double scale)
-{
-    int fontface = cv::FONT_HERSHEY_DUPLEX;
-    int thickness = 1;
-    int baseline = 0;
-
-    auto r = cv::Rect(0, 0, im.cols, im.rows);
-
-    cv::Size text = cv::getTextSize(label, fontface, scale, thickness, &baseline);
-    cv::Point pt(r.x + (r.width-text.width)/2, r.y + (r.height+text.height)/2);
-
-    cv::putText(im, label, pt, fontface, scale, CV_RGB(255,255,255), thickness, 8);
+    return { deltaW, deltaH, _wRem, _hRem, (unsigned long) dst1.cols, (unsigned long) dst1.rows };
 }

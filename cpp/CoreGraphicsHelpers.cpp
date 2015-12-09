@@ -107,33 +107,14 @@ void convertImageRefToCGBuf(CGImageRef imageRef) {
 
 CGWindowBuffer convertImageRefToRGBAWSize(unsigned int finalWidth, unsigned finalHeight) {
     cv::Mat destBuffer(finalHeight, finalWidth, CV_8UC4);
-    resizeKeepAspectRatio(cgBuffer, destBuffer);
+    auto resizeInfo = resizeKeepAspectRatio(cgBuffer, destBuffer);
     auto sizeBytes = destBuffer.step[0] * destBuffer.rows;
-    return { (const char *) destBuffer.data, sizeBytes, finalHeight, finalWidth} ;
-}
-
-CGWindowBuffer convertImageRefToRGBAWoSize() {
-    auto sizeBytes = cgBuffer.step[0] * cgBuffer.rows;
-    auto sizePixels = cgWidth*cgHeight;
-    debugf("Size of picture         : {} x {} = {} pixels", cgWidth, cgHeight, sizePixels);
-    debugf("Size of buffer in bytes : {}", sizeBytes);
-
-    return { (const char *) cgBuffer.data, sizeBytes, cgHeight, cgWidth } ;
+    return { (const char *) destBuffer.data, sizeBytes, finalHeight, finalWidth, resizeInfo } ;
 }
 
 CGWindowBuffer convertImageRefToRGBAResize(CGImageRef imageRef, unsigned int finalWidth, unsigned int finalHeight) {
     convertImageRefToCGBuf(imageRef);
     return convertImageRefToRGBAWSize(finalWidth, finalHeight);
-}
-
-CGWindowBuffer convertImageRefToRGBA(CGImageRef imageRef) {
-    convertImageRefToCGBuf(imageRef);
-    return convertImageRefToRGBAWoSize();
-}
-
-CGWindowBuffer getImageAsBuffer(CGWindowID windowId) {
-    auto ir = getWindowImage(windowId);
-    return convertImageRefToRGBA(ir);
 }
 
 CGWindowBuffer getImageAsBufferResized(CGWindowID windowId, unsigned int finalWidth, unsigned int finalHeight) {

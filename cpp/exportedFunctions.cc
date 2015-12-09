@@ -24,17 +24,6 @@ NAN_METHOD(windowList) {
 
 using namespace std;
 
-NAN_METHOD(getImageBuffer) {
-    /* Get parameter */
-    auto wid = __js_argAsInt(0);
-    auto wb = getImageAsBuffer(wid);
-    __js_new(x);
-    __js_sets(x, _c(_s("cols")), _i(wb.cols));
-    __js_sets(x, _c(_s("rows")), _i(wb.rows));
-    __js_sets(x, _c(_s("buf")), _c(_b(wb.pointer, wb.size)));
-    __js_return(x);
-}
-
 NAN_METHOD(getImageBufferResized) {
     /* Get parameter */
     auto wid = __js_argAsInt(0);
@@ -44,6 +33,18 @@ NAN_METHOD(getImageBufferResized) {
     __js_new(x);
     __js_sets(x, _c(_s("cols")), _i(wb.cols));
     __js_sets(x, _c(_s("rows")), _i(wb.rows));
-    __js_sets(x, _c(_s("buf")), _c(_b(wb.pointer, wb.size)));
+    __js_sets(x, _c(_s("buf")),  _c(_b(wb.pointer, wb.size)));
+
+    __js_new(d);
+
+    __js_sets(d, _c(_s("borderSizeLeft")), _i(wb.resizeInfo.borderSizeLeft));
+    __js_sets(d, _c(_s("borderSizeTop")), _i(wb.resizeInfo.borderSizeTop));
+    __js_sets(d, _c(_s("borderSizeRight")), _i(wb.resizeInfo.borderSizeRight));
+    __js_sets(d, _c(_s("borderSizeBottom")), _i(wb.resizeInfo.borderSizeBottom));
+    __js_sets(d, _c(_s("innerWidth")), _i(wb.resizeInfo.innerWidth));
+    __js_sets(d, _c(_s("innerHeight")), _i(wb.resizeInfo.innerHeight));
+
+    __js_sets(x, _c(_s("resizeInfo")), d);
+
     __js_return(x);
 }

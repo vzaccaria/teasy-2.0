@@ -1,6 +1,6 @@
+import __ from "gl-react/react"
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import LiveWinContainer from './containers/LiveWinContainer';
 import { updateWindowSize } from './actions/LiveWinAppActions';
 import { listenToStateChange } from './utils/liveWinIPC';

@@ -9,7 +9,6 @@ using v8::FunctionTemplate;
 
 NAN_MODULE_INIT(InitAll) {
     __js_expose_fn("windowList", windowList);
-    __js_expose_fn("getImageBuffer", getImageBuffer);
     __js_expose_fn("getImageBufferResized", getImageBufferResized);
 }
 

@@ -1,5 +1,5 @@
-import React from 'react';
-import GL from 'gl-react';
+const GL = require("gl-react");
+const React = GL.React;
 
 const shaders = GL.Shaders.create({
     justDisplay: {
@@ -7,8 +7,14 @@ const shaders = GL.Shaders.create({
         precision highp float;
         varying vec2 uv;
         uniform sampler2D image;
+        uniform sampler2D tex;
         void main () {
+
             vec4 c = texture2D(image, uv);
+            vec4 o = texture2D(tex, uv);
+            c.r = mix(c.r , o.r , o.a);
+            c.g = mix(c.g , o.g , o.a);
+            c.b = mix(c.b , o.b , o.a);
             gl_FragColor = c;
         }
         `
@@ -17,12 +23,15 @@ const shaders = GL.Shaders.create({
 
 
 let GLDisplayUintBuf = GL.createComponent(
-    ({ width, height, image }) => {
+    ({ width, height, image, children: tex }) => {
+        width = parseInt(width);
+        height = parseInt(height);
         return (
-            <GL.View width={parseInt(width)} height={parseInt(height)} shader={shaders.justDisplay} uniforms={{ image }} />
+            <GL.Node width={(width)} height={(height)} shader={shaders.justDisplay} uniforms={{ image, tex }}>
+            </GL.Node>
         );
     },
-    { displayName: "Raw Buffer" }
+    { displayName: "GLDisplayUintBuf"}
 );
 
 module.exports = { GLDisplayUintBuf }
