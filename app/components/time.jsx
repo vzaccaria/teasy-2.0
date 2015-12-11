@@ -2,26 +2,22 @@ import React from 'react';
 import moment from 'moment'
 import _ from 'lodash'
 
-moment.locale('it');
-
 export default class Time extends React.Component {
 
     render()  {
-        let curtime = moment()
-            let message =curtime.format('HH:mm:ss');
+        let curtime = moment();
 
         let showBreakTime = _.get(this.props, "state.liveView.breakTime", false);
-        let nmessage = ""
+        let __ = _.get(this.props, "state.__", () => "");
+        let message = __(curtime, {short: true });
         if(showBreakTime !== false) {
             let diff = moment(showBreakTime, "HH:mm").diff(curtime);
             let duration = moment.duration(diff);
             if(diff > 0) {
-                nmessage = `- ${duration.humanize()}`;
+                message = `${message} - ${__(duration, {duration: true})}`;
             } else {
-                nmessage = '- tempo scaduto';
+                message = `${message} - ${__('timeFinished')}`;
             }
-        } else {
-            nmessage= "";
         }
 
         if(_.get(this.props, 'asDimmer', false)) {
@@ -30,7 +26,7 @@ export default class Time extends React.Component {
             return (
                 <div className={cn} >
                     <div style={{fontSize: 40}} className="ui text loader">
-                        {message}{nmessage}
+                        {message}
                     </div>
                 </div>
             )
@@ -47,7 +43,7 @@ export default class Time extends React.Component {
                 <div style={cstyle} className="ui equal width center aligned padded grid">
                     <div className="row">
                         <div className="column">
-                            {message}{nmessage}
+                            {message}
                         </div>
                     </div>
                 </div>);

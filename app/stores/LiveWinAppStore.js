@@ -1,5 +1,7 @@
 var alt = require('../utils/alt');
 var LiveWinAppActions = require('../actions/LiveWinAppActions');
+import i18n from '../utils/i18n'
+
 import _ from 'lodash'
 
 import _debug from 'debug';
@@ -17,13 +19,13 @@ class LiveWinAppStore {
                 height: window.innerHeight
             }
         }
-
         /* Bind the actions in LiveWinAppActions */
         this.bindActions(LiveWinAppActions)
     }
 
     updateRemoteState(state) {
         this.remoteState = state
+        this.remoteState.__ = i18n(this.remoteState.currentLanguage)
     }
 
     updateWindowSize(size) {

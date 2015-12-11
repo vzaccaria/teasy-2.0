@@ -48,15 +48,16 @@ export default class PreviewContainer extends React.Component {
             return <PreviewWindow state={this.state} />
         } else {
             if(windowNotSet(this.state)) {
+                let { __ } = this.state
                 let { width, height } = getPreviewSize(this.state.window.size);
 
                 return <Message width={width}
                                 height={height}
-                                title="No window selected!"
-                                message="Please choose a window from the left" />
+                                title={__('noWindowSelected')}
+                                message={__('chooseAWindowFromTheLeft')} />
 
             } else {
-                return <Loader message="Initializing" />
+                return <Loader message={'...'} />
             }
         }
     }

@@ -14,7 +14,8 @@ class AppActions {
             'updateCurrentSystemWindows',
             'updateLiveViewTime',
             'setBreakTime',
-            'clearBreakTime'
+            'clearBreakTime',
+            'changeLanguage'
         )
     }
 

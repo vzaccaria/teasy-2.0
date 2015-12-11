@@ -3,6 +3,7 @@ var alt = require('../utils/alt');
 var AppActions = require('../actions/AppActions');
 import { sendStateChange } from '../utils/liveWinIPC'
 import moment from 'moment'
+import i18n from '../utils/i18n'
 
 import _debug from 'debug';
 const debug = _debug('app:stores/AppStore.jsx');
@@ -15,6 +16,8 @@ class AppStore {
         /* `this` is the state */
         this.currentLiveWindow = 0
         this.currentLiveWindowData = {}
+        this.currentLanguage = 'en';
+        this.__ = i18n(this.currentLanguage)
         this.window = { size: { width: window.innerWidth, height: window.innerHeight } }
         this.liveView = {
             time: {
@@ -57,6 +60,11 @@ class AppStore {
 
     clearBreakTime() {
         this.liveView.breakTime = undefined;
+    }
+
+    changeLanguage(language) {
+        this.currentLanguage = language;
+        this.__ = i18n(this.currentLanguage)
     }
 }
 

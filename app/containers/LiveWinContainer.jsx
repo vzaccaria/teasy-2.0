@@ -6,6 +6,7 @@ import Loader from '../components/loader';
 import _ from 'lodash'
 import Time from '../components/time';
 
+
 import _debug from 'debug';
 const debug = _debug('app:containers/LiveWinContainer');
 
@@ -61,7 +62,12 @@ export default class LiveWinContainer extends React.Component {
                 return <Time asDimmer={true} state={this.state.remoteState} > </Time>
             }
             else {
-                return <Loader message="Waiting for connection" />;
+                if(!_.isNull(this.state)) {
+                    return <Loader message={this.state.remoteState.__("waitingForConnection")} />;
+                } else {
+                    return <div />;
+                }
+
             }
         }
     }

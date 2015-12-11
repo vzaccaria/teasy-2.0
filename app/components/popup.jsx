@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash'
 
 import '../../semantic/src/definitions/modules/popup'
 import '../../semantic/src/definitions/modules/transition'
@@ -21,12 +22,17 @@ function asPopup(iconName, popup) {
             )
         },
         render: function() {
-            return (
-                    <a className="ui basic icon item popact">
-                        <i className={`${iconName} icon`} />
-                    </a>
+            if(_.isUndefined(this.props.className)) {
+                return (<a className="ui basic icon item popact">
+                    <i className={`${iconName} icon`} />
+                </a>);
+            } else {
+                return (<a className="ui basic icon item popact">
+                    <i className={`${this.props.className}`} />
+                </a>);
 
-            );}
+                }
+        }
     });
     let IconPopupContent = React.createClass({
         render: function() {
