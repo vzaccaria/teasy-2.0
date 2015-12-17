@@ -10,6 +10,8 @@ import TimeChooser from '../components/TimeChooser'
 import Time from '../components/time'
 import { WindowCapture } from '../components/windowCaptureGLReact.jsx';
 
+import { Icon } from '../components/icon';
+
 const showingTime = (state) => {
     return (!_.isNull(state) && !_.isUndefined(state) && state.liveView.time.showTime)
 }
@@ -19,14 +21,6 @@ const previewCanvasSize = (state) => {
     let width = s.width;
     let height = s.height*2/3;
     return { width, height }
-}
-
-let icon = function(itype, handler) {
-    return (
-        <a className="ui basic icon item" onClick={handler} >
-            <i className={`${itype} icon`} />
-        </a>
-    );
 }
 
 let {IconPopup, IconPopupContent} = asPopup("spinner", <TimeChooser />);
@@ -62,8 +56,8 @@ export default class PreviewWindow extends React.Component {
                 <div className="ui small floated right secondary menu inverted">
                     <IconPopup />
                     <IconPopupContent />
-                    {icon("time", toggleTimeHandler)}
-                    {icon("remove", closeHandler)}
+                    <Icon type="time" onClick={toggleTimeHandler} />
+                    <Icon type="remove" onClick={closeHandler} />
                 </div>
             </div>);
 

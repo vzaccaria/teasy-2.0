@@ -15,7 +15,8 @@ class AppActions {
             'updateLiveViewTime',
             'setBreakTime',
             'clearBreakTime',
-            'changeLanguage'
+            'changeLanguage',
+            'togglePriorityMode'
         )
     }
 

@@ -1,7 +1,10 @@
 var _ = require('lodash')
 var alt = require('../utils/alt');
 var AppActions = require('../actions/AppActions');
-import { sendStateChange } from '../utils/liveWinIPC'
+import {
+    sendStateChange
+}
+from '../utils/liveWinIPC'
 import moment from 'moment'
 import i18n from '../utils/i18n'
 
@@ -18,7 +21,13 @@ class AppStore {
         this.currentLiveWindowData = {}
         this.currentLanguage = 'en';
         this.__ = i18n(this.currentLanguage)
-        this.window = { size: { width: window.innerWidth, height: window.innerHeight } }
+        this.priorityMode = "normal";
+        this.window = {
+            size: {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+        }
         this.liveView = {
             time: {
                 showTime: false,
@@ -31,16 +40,25 @@ class AppStore {
         this.bindActions(AppActions)
     }
 
+    _updateCurrentLiveWindowUnconditional(wid) {
+            this.currentLiveWindow = wid;
+            this.currentLiveWindowData = _.first(_.filter(this.currentSystemWindows, (it) => it.wid == wid))
+    }
+
     updateCurrentLiveWindow(wid) {
-        this.currentLiveWindow = wid;
-        this.currentLiveWindowData = _.first(_.filter(this.currentSystemWindows, (it) => it.wid == wid))
-        sendStateChange(this)
+        if (this.priorityMode === "normal") {
+            this._updateCurrentLiveWindowUnconditional(wid);
+            sendStateChange(this);
+        }
     }
 
     updateCurrentSystemWindows(list) {
         let windowList = _.filter(list, (it) => it.layer == 0);
         windowList = _.filter(windowList, (it) => it.name !== 'Teasy 2.0')
         this.currentSystemWindows = windowList;
+        if(this.priorityMode === "dynamic") {
+            this._updateCurrentLiveWindowUnconditional(_.head(windowList).wid);
+        }
         sendStateChange(this)
     }
 
@@ -54,12 +72,25 @@ class AppStore {
         sendStateChange(this)
     }
 
-    setBreakTime({minutesFromNow}) {
+    setBreakTime({
+        minutesFromNow
+    }) {
         this.liveView.breakTime = moment().add(minutesFromNow, "minute").format("HH:mm")
+            // Shouldnt invoke sendStateChange?
     }
 
     clearBreakTime() {
         this.liveView.breakTime = undefined;
+        // Shouldnt invoke sendStateChange?
+    }
+
+    togglePriorityMode() {
+        if(this.priorityMode === "normal") {
+            this.priorityMode = "dynamic";
+        } else {
+            this.priorityMode = "normal";
+        }
+        sendStateChange(this);
     }
 
     changeLanguage(language) {

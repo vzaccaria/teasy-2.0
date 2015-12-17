@@ -9,7 +9,8 @@ let _phrases = {
         chooseAWindowFromTheLeft: "Scegli una finestra sulla sinistra",
         timeFinished: "tempo scaduto",
         initializing: "Inizializzazione",
-        longTimeFormat: "dddd Do MMMM YYYY, HH:mm:ss"
+        longTimeFormat: "dddd Do MMMM YYYY, HH:mm:ss",
+        showingTopWindow: "Mostra sempre finestra top"
     },
 
     en: {
@@ -18,7 +19,8 @@ let _phrases = {
         noWindowSelected: "No window selected!",
         timeFinished: "time is up",
         initializing: "Initializing",
-        longTimeFormat: "dddd MMMM, Do YYYY, h:mm:ss a"
+        longTimeFormat: "dddd MMMM, Do YYYY, h:mm:ss a",
+        showingTopWindow: "Showing top window"
     }
 }
 

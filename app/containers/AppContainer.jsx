@@ -2,9 +2,11 @@ import React from 'react';
 import SystemWindowList from '../components/systemWindowList';
 import PreviewContainer from './PreviewContainer'
 import AppStore from '../stores/AppStore';
+import { togglePriorityMode } from '../actions/AppActions'
 import moment from 'moment'
 import { asPopup } from '../components/popup'
 import { LanguageChooser, getLanguageFlag } from '../components/languageChooser'
+import { Icon } from '../components/icon'
 
 import { WindowListStyle, PreviewStyle, MenuStyle } from '../styles/Layout.js'
 
@@ -43,14 +45,16 @@ export default class AppContainer extends React.Component {
     render() {
         debug("Rendering");
         if(validState(this.state)) {
-            let { __ } = this.state;
+            let { __, priorityMode } = this.state;
+            let prioIcon = `magic ${ (priorityMode === "dynamic") ? "red" : "white"}`;
             return (
                 <div>
                     <div className="ui inverted menu fixed">
                         <div className="item"> Teasy 2.0 </div>
+                        <Icon type={prioIcon} onClick={togglePriorityMode} />
+                        <IconPopup className={`${getLanguageFlag(this.state.currentLanguage)} flag`} />
+                        <IconPopupContent />
                         <div className="right menu">
-                                <IconPopup className={`${getLanguageFlag(this.state.currentLanguage)} flag`} />
-                                <IconPopupContent />
                             <div className="item">
                                 {__(moment())}
                             </div>
