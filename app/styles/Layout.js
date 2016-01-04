@@ -1,5 +1,5 @@
 import color from 'color'
-const xWidth = 300;
+const xWidth = 350;
 const yFromTop = 40;
 
 const getPreviewSize = (window) => {

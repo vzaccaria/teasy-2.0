@@ -45,7 +45,12 @@ export default class PreviewContainer extends React.Component {
     render() {
         debug('rendering container');
         if(shouldShowWindow(this.state)) {
-            return <PreviewWindow state={this.state} />
+            let { width, height } = getPreviewSize(this.state.window.size);
+            if(width > 0 && height > 0) {
+                return <PreviewWindow state={this.state} />
+            } else {
+                return <div />
+            }
         } else {
             if(windowNotSet(this.state)) {
                 let { __ } = this.state

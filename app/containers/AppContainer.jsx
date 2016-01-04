@@ -8,7 +8,7 @@ import { asPopup } from '../components/popup'
 import { LanguageChooser, getLanguageFlag } from '../components/languageChooser'
 import { Icon } from '../components/icon'
 
-import { WindowListStyle, PreviewStyle, MenuStyle } from '../styles/Layout.js'
+import { WindowListStyle, PreviewStyle } from '../styles/Layout.js'
 
 import _debug from 'debug';
 const debug = _debug('app:containers/AppContainer');
