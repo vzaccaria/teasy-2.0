@@ -15,14 +15,19 @@ const showTime = (state) => {
 }
 
 const showWindow = (state) => {
-    return _.get(state, 'remoteState.currentLiveWindow', false);
+    let { width, height } = _.get(state, 'window.size', { width: 0,  height: 0 });
+    if (width > 100 && height > 100) {
+        return _.get(state, 'remoteState.currentLiveWindow', false);
+    } else {
+        return false;
+    }
 }
 
 export default class LiveWinContainer extends React.Component {
 
     constructor() {
-        super()
-            LiveWinAppStore.getState();
+        super();
+        LiveWinAppStore.getState();
     }
 
     onStoreChange(state) {
