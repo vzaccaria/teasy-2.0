@@ -31,7 +31,6 @@ function getStyle(props, state) {
         style = [ baseState ]
     }
     return style;
-
 }
 
 @Radium
@@ -58,7 +57,7 @@ export default class SystemWindowListItem extends React.Component {
                 </div>
                 <div className="middle aligned content">
                     <div className="header"> {this.props.item.owner} </div>
-                    <div className="meta">
+                    <div className="meta" style={{fontSize: "0.8rem"}}>
                         {shortName} -
                         {this.props.item.wid}
                     </div>
