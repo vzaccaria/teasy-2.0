@@ -43,6 +43,10 @@ export default class PreviewWindow extends React.Component {
             AppActions.updateLiveViewTime({showTime: !state.liveView.time.showTime})
         }
 
+        let toggleShowTopBar = () => {
+            AppActions.toggleShowTopBar();
+        }
+
         let windowTitle = (
             <h2 className="ui header">
                 {own}
@@ -54,6 +58,7 @@ export default class PreviewWindow extends React.Component {
         let overlayMenu = (
             <div style={{ position: "absolute", background: color("#000000").clearer(0.4).rgbaString(), width: width }} >
                 <div className="ui small floated right secondary menu inverted">
+                    <Icon type="maximize" onClick={toggleShowTopBar} />
                     <IconPopup />
                     <IconPopupContent />
                     <Icon type="time" onClick={toggleTimeHandler} />

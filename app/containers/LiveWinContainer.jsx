@@ -42,20 +42,27 @@ export default class LiveWinContainer extends React.Component {
         LiveWinAppStore.unlisten(this.onStoreChange.bind(this))
     }
 
-    render() {
-        debug('rendering container');
-        if(showWindow(this.state) && !showTime(this.state)) {
-            return (
-                <div>
-                    <div className="ui inverted menu fixed">
+    getTopBar(showTopBar) {
+        if(showTopBar) {
+        return (<div className="ui inverted menu fixed">
                         <div className="item"> Teasy 2.0 </div>
                         <div className="right menu">
                             <div className="item">
                                 {moment().format("dddd Do MMMM YYYY, h:mm:ss a")}
                             </div>
                         </div>
-                    </div>
+        </div>);
+        } else {
+            return <div />
+            }
+    }
 
+    render() {
+        debug('rendering container');
+        if(showWindow(this.state) && !showTime(this.state)) {
+            return (
+                <div>
+                    {this.getTopBar(this.state.remoteState.showTopBar)}
                     <WindowCapture
                         width={this.state.window.size.width}
                         height={this.state.window.size.height}

@@ -22,6 +22,7 @@ class AppStore {
         this.currentLanguage = 'en';
         this.__ = i18n(this.currentLanguage)
         this.priorityMode = "normal";
+        this.showTopBar = true;
         this.window = {
             size: {
                 width: window.innerWidth,
@@ -96,6 +97,16 @@ class AppStore {
     changeLanguage(language) {
         this.currentLanguage = language;
         this.__ = i18n(this.currentLanguage)
+    }
+
+    changeLanguage(language) {
+        this.currentLanguage = language;
+        this.__ = i18n(this.currentLanguage)
+    }
+
+    toggleShowTopBar() {
+        this.showTopBar = !this.showTopBar;
+        sendStateChange(this);
     }
 }
 

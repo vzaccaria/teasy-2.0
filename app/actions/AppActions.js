@@ -16,7 +16,8 @@ class AppActions {
             'setBreakTime',
             'clearBreakTime',
             'changeLanguage',
-            'togglePriorityMode'
+            'togglePriorityMode',
+            'toggleShowTopBar'
         )
     }
 
