@@ -1,23 +1,27 @@
 import color from 'color'
-const xWidth = 350;
-const yFromTop = 40;
 
-const getPreviewSize = (window) => {
+const listWidth = 350;
+const previewWidth = listWidth;
+const previewHeight = 300;
+const topBarSize = 40;
+
+const getAppWindowStyle = () => {
     return {
-        width: (window.width - xWidth) > 0 ? (window.width - xWidth) : 0,
-        height: window.height
+        width: listWidth,
+        height: 800
     }
 }
+
 
 const dividerGray = color('#FFFFFF').darken(0.1).hexString()
 
 const WindowListStyle = (window) => {
     return {
         boxSizing: 'border-box',
-        width: xWidth,
-        position: 'relative',
-        top: yFromTop,
-        minHeight: window.size.height - yFromTop,
+        width: listWidth,
+        position: 'fixed',
+        top: topBarSize + previewHeight,
+        minHeight: window.size.height - topBarSize - previewHeight,
         height: '100%',
         borderRight: `1px solid ${dividerGray}`,
         cursor: 'pointer',
@@ -25,12 +29,21 @@ const WindowListStyle = (window) => {
     }
 }
 
+
+
+const getPreviewSize = (window) => {
+    return {
+        width: previewWidth,
+        height: previewHeight
+    }
+}
+
 const PreviewStyle = {
     bxSizing: 'border-box',
     position: 'fixed',
-    top: yFromTop,
-    left: xWidth,
-    height: '100%'
+    width: previewWidth,
+    top: topBarSize,
+    height: previewHeight
 }
 
 const MenuStyle = {
@@ -38,5 +51,5 @@ const MenuStyle = {
 }
 
 module.exports = {
-    WindowListStyle, PreviewStyle, getPreviewSize, MenuStyle, dividerGray
+    WindowListStyle, PreviewStyle, getPreviewSize, MenuStyle, dividerGray, getAppWindowStyle
 }

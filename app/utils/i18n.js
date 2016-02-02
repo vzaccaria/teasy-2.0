@@ -6,20 +6,20 @@ let _phrases = {
     it: {
         waitingForConnection: "In attesa del contenuto",
         noWindowSelected: "Nessuna finestra scelta",
-        chooseAWindowFromTheLeft: "Scegli una finestra sulla sinistra",
+        chooseAWindowFromTheLeft: "Scegli una finestra qui sotto",
         timeFinished: "tempo scaduto",
         initializing: "Inizializzazione",
-        longTimeFormat: "dddd Do MMMM YYYY, HH:mm:ss",
+        longTimeFormat: "D/M/YY - HH:mm:ss",
         showingTopWindow: "Mostra sempre finestra top"
     },
 
     en: {
         waitingForConnection: "Waiting for connection",
-        chooseAWindowFromTheLeft: "Please, choose a window from the left",
+        chooseAWindowFromTheLeft: "Please, choose a window below",
         noWindowSelected: "No window selected!",
         timeFinished: "time is up",
         initializing: "Initializing",
-        longTimeFormat: "dddd MMMM, Do YYYY, h:mm:ss a",
+        longTimeFormat: "M/D/YY h:mm:ss a",
         showingTopWindow: "Showing top window"
     }
 }

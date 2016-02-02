@@ -1,6 +1,7 @@
 /* eslint no-path-concat: 0, func-names:0 */
 var app = require('app');
 var BrowserWindow = require('browser-window');
+//var getAppWindowStyle = require('./app/styles/Layout').getAppWindowStyle
 
 require('electron-debug')();
 require('crash-reporter').start();
@@ -41,16 +42,17 @@ function setupLiveWindow() {
 }
 
 function setupMainWindow() {
-    mainWindow = new BrowserWindow({
-        width: 1024,
-        height: 728
-    });
+    mainWindow = new BrowserWindow({ width: 350, height: 800});
 
     if (process.env.HOT) {
         mainWindow.loadUrl('file://' + __dirname + '/app/hot-dev-app.html');
     } else {
         mainWindow.loadUrl('file://' + __dirname + '/app/app.html');
     }
+
+    mainWindow.setAlwaysOnTop(true);
+
+    mainWindow.setResizable(false);
 
     mainWindow.on('closed', function() {
         mainWindow = null;

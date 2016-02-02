@@ -9,6 +9,13 @@ import { asPopup } from '../components/popup'
 import TimeChooser from '../components/TimeChooser'
 import Time from '../components/time'
 import { WindowCapture } from '../components/windowCaptureGLReact.jsx';
+import { LanguageChooser, getLanguageFlag } from '../components/languageChooser'
+
+
+let {IconPopup: IconPopupLang, IconPopupContent: IconPopupContentLang} = asPopup("spinner", <LanguageChooser />);
+
+let {IconPopup: IconPopupTime, IconPopupContent: IconPopupContentTime} = asPopup("spinner", <TimeChooser />);
+
 
 import { Icon } from '../components/icon';
 
@@ -19,11 +26,10 @@ const showingTime = (state) => {
 const previewCanvasSize = (state) => {
     let s = getPreviewSize(state.window.size);
     let width = s.width;
-    let height = s.height*2/3;
+    let height = s.height;
     return { width, height }
 }
 
-let {IconPopup, IconPopupContent} = asPopup("spinner", <TimeChooser />);
 
 export default class PreviewWindow extends React.Component {
 
@@ -48,19 +54,21 @@ export default class PreviewWindow extends React.Component {
         }
 
         let windowTitle = (
-            <h2 className="ui header">
+            <h4 className="ui header">
                 {own}
                 <div className="sub header">
                     {nam}
                 </div>
-            </h2>);
+            </h4>);
 
         let overlayMenu = (
             <div style={{ position: "absolute", background: color("#000000").clearer(0.4).rgbaString(), width: width }} >
                 <div className="ui small floated right secondary menu inverted">
+                    <IconPopupLang className={`${getLanguageFlag(state.currentLanguage)} flag`} />
+                    <IconPopupContentLang />
                     <Icon type="maximize" onClick={toggleShowTopBar} />
-                    <IconPopup />
-                    <IconPopupContent />
+                    <IconPopupTime />
+                    <IconPopupContentTime IconPopupContentTime />
                     <Icon type="time" onClick={toggleTimeHandler} />
                     <Icon type="remove" onClick={closeHandler} />
                 </div>
@@ -75,9 +83,6 @@ export default class PreviewWindow extends React.Component {
 
         return (
             <div>
-                <div style={{ padding: '20px'}} className="ui">
-                    <div className="sixteen wide column"> {windowTitle} </div>
-                </div>
                 <div style={{ position: "relative"}} >
                     <div style={{ position: "absolute" }} >
                         {whatToShow}

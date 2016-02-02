@@ -1,3 +1,7 @@
+PROCREGEXP="node.*webpack|Electron"
+
+include ~/.make/index.make
+
 all: build
 
 run:
@@ -14,8 +18,10 @@ hot:
 		npm run hot-dev-server &
 		npm run start-hot &
 
-stop:
-		killall node && killall Electron
+
+show: show-procs
+
+stop: kill-procs
 
 restart:
 		make stop

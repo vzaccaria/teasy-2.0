@@ -51,9 +51,6 @@ export default class AppContainer extends React.Component {
                 <div>
                     <div className="ui inverted menu fixed">
                         <div className="item"> Teasy 2.0 </div>
-                        <Icon type={prioIcon} onClick={togglePriorityMode} />
-                        <IconPopup className={`${getLanguageFlag(this.state.currentLanguage)} flag`} />
-                        <IconPopupContent />
                         <div className="right menu">
                             <div className="item">
                                 {__(moment())}
@@ -64,6 +61,7 @@ export default class AppContainer extends React.Component {
                         <div style={WindowListStyle(this.state.window)}>
                             <SystemWindowList />
                         </div>
+                        B
                         <div style={PreviewStyle}>
                             <PreviewContainer />
                         </div>
