@@ -23,10 +23,12 @@ const showingTime = (state) => {
     return (!_.isNull(state) && !_.isUndefined(state) && state.liveView.time.showTime)
 }
 
+let barSize = 40
+
 const previewCanvasSize = (state) => {
     let s = getPreviewSize(state.window.size);
     let width = s.width;
-    let height = s.height;
+    let height = s.height - barSize;
     return { width, height }
 }
 
@@ -53,16 +55,8 @@ export default class PreviewWindow extends React.Component {
             AppActions.toggleShowTopBar();
         }
 
-        let windowTitle = (
-            <h4 className="ui header">
-                {own}
-                <div className="sub header">
-                    {nam}
-                </div>
-            </h4>);
-
         let overlayMenu = (
-            <div style={{ position: "absolute", background: color("#000000").clearer(0.4).rgbaString(), width: width }} >
+            <div style={{ background: color("#000000").rgbaString(), width: width, height: barSize }} >
                 <div className="ui small floated right secondary menu inverted">
                     <IconPopupLang className={`${getLanguageFlag(state.currentLanguage)} flag`} />
                     <IconPopupContentLang />
@@ -82,11 +76,9 @@ export default class PreviewWindow extends React.Component {
         let whatToShow = (showingTime(state) ? timeMessage  : windowCapture );
 
         return (
-            <div>
-                <div style={{ position: "relative"}} >
-                    <div style={{ position: "absolute" }} >
-                        {whatToShow}
-                    </div> {overlayMenu} </div>
+            <div style={{background: 'black'}}>
+                {whatToShow}
+                {overlayMenu}
             </div>
         );
 
