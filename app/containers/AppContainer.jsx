@@ -46,7 +46,6 @@ export default class AppContainer extends React.Component {
         debug("Rendering");
         if(validState(this.state)) {
             let { __, priorityMode } = this.state;
-            let prioIcon = `magic ${ (priorityMode === "dynamic") ? "red" : "white"}`;
             return (
                 <div>
                     <div className="ui inverted menu fixed">

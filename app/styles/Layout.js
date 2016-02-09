@@ -21,8 +21,8 @@ const WindowListStyle = (window) => {
         width: listWidth,
         position: 'fixed',
         top: topBarSize + previewHeight,
-        minHeight: window.size.height - topBarSize - previewHeight,
-        height: '100%',
+        height: window.size.height - topBarSize - previewHeight,
+        overflowY:  'auto',
         borderRight: `1px solid ${dividerGray}`,
         cursor: 'pointer',
         background: color('#FFFFFF').darken(0.05).hslString()
