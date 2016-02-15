@@ -2,19 +2,15 @@ PROCREGEXP="node.*webpack|Electron"
 
 include ~/.make/index.make
 
-all: build
+all: start
 
-run:
+run: compile
 		./node_modules/.bin/electron .
 
 compile:
 		./node_modules/.bin/webpack --config ./webpack/webpack.config.production.js
 
-dev: build
-		npm run dev-server &
-		npm run start-dev &
-
-hot:
+start:
 		npm run hot-dev-server &
 		npm run start-hot &
 
@@ -25,7 +21,7 @@ stop: kill-procs
 
 restart:
 		make stop
-		make hot
+		make start
 
 build-native:
 		HOME=~/.electron-gyp node-gyp rebuild --target=0.33.1 --arch=x64 --dist-url=https://atom.io/download/atom-shell

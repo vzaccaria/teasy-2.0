@@ -3,6 +3,8 @@ var app = require('app');
 var BrowserWindow = require('browser-window');
 //var getAppWindowStyle = require('./app/styles/Layout').getAppWindowStyle
 
+var _ = require('lodash')
+
 require('electron-debug')();
 require('crash-reporter').start();
 
@@ -22,11 +24,38 @@ function byPassWidChange(w2) {
     })
 }
 
+function getSecondDisplay() {
+    /* This should be  here until we dont update electron */
+    var electronScreen = require('screen')
+    var displays = electronScreen.getAllDisplays();
+    var found = _.find(displays, function(it) {
+        return (it.bounds.x !== 0 || it.bounds.y !== 0);
+    })
+    console.log(JSON.stringify(found, 0, 4));
+    if (_.isUndefined(found)) {
+        return {
+            x: 0,
+            y: 0
+        }
+    } else {
+        return {
+            x: found.bounds.x,
+            y: found.bounds.y,
+            fullscreen: true
+        }
+    }
+
+}
+
 function setupLiveWindow() {
-    liveWindow = new BrowserWindow({
+    var wnd = {
         width: 800,
         height: 600
-    });
+    }
+    wnd = _.assign(wnd, getSecondDisplay());
+
+    liveWindow = new BrowserWindow(wnd)
+
     if (process.env.HOT) {
         liveWindow.loadUrl('file://' + __dirname + '/app/hot-dev-liveWin.html');
     } else {
@@ -36,13 +65,16 @@ function setupLiveWindow() {
         liveWindow = null;
     })
     if (process.env.NODE_ENV === 'development') {
-//        liveWindow.openDevTools();
+        //        liveWindow.openDevTools();
     }
     byPassWidChange(liveWindow);
 }
 
 function setupMainWindow() {
-    mainWindow = new BrowserWindow({ width: 350, height: 800});
+    mainWindow = new BrowserWindow({
+        width: 350,
+        height: 800
+    });
 
     if (process.env.HOT) {
         mainWindow.loadUrl('file://' + __dirname + '/app/hot-dev-app.html');
@@ -59,7 +91,7 @@ function setupMainWindow() {
     });
 
     if (process.env.NODE_ENV === 'development') {
-//        mainWindow.openDevTools();
+        //        mainWindow.openDevTools();
     }
 }
 
