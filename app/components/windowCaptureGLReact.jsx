@@ -94,12 +94,16 @@ let WindowCapture = React.createClass({
                 width: parseInt(this.props.width),
                 height: parseInt(this.props.height)
             }
-            let active = _.get(this.props, "active", false);
+            let active = _.get(this.props, "pointerActive", false);
+            let position = _.get(this.props, "pointerPosition", [1.0, 0.5]);
+            let intensity = _.get(this.props, "pointerIntensity", 0.9);
+            let psize = _.get(this.props, "pointerSize", 0.9);
+
             if(active) {
                 return (
                     <Surface {...size}  >
                         <GLDisplayUintBuf {...size} image={this.state.buf}>
-                            <GLDisplayLaserPointer {...size} size={0.05} position={[1.0, 0.5]} />
+                            <GLDisplayLaserPointer {...size} size={psize} position={position} intensity={intensity} />
                         </GLDisplayUintBuf>
                     </Surface>
                 );

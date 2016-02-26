@@ -24,6 +24,13 @@ function byPassWidChange(w2) {
     })
 }
 
+function registerMouseHandler(rate, f) {
+    var electronScreen = require('screen')
+    setInterval(function() {
+        f(electronScreen.getCursorScreenPoint())
+    }, (1/rate)*1000)
+}
+
 function getSecondDisplay() {
     /* This should be  here until we dont update electron */
     var electronScreen = require('screen')
@@ -31,7 +38,6 @@ function getSecondDisplay() {
     var found = _.find(displays, function(it) {
         return (it.bounds.x !== 0 || it.bounds.y !== 0);
     })
-    console.log(JSON.stringify(found, 0, 4));
     if (_.isUndefined(found)) {
         return {
             x: 0,
@@ -44,6 +50,7 @@ function getSecondDisplay() {
             fullscreen: true
         }
     }
+
 
 }
 
@@ -68,6 +75,9 @@ function setupLiveWindow() {
         //        liveWindow.openDevTools();
     }
     byPassWidChange(liveWindow);
+    registerMouseHandler(1, function(coord) {
+        liveWindow.webContents.send('update-coordinates', coord)
+    })
 }
 
 function setupMainWindow() {

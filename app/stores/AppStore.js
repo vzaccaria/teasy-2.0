@@ -35,6 +35,12 @@ class AppStore {
                 breakTime: undefined
             }
         }
+        this.pointer = {
+            pointerActive: true,
+            pointerPosition: [0.0, 0.0],
+            pointerIntensity: 0.9,
+            pointerSize: 0.05
+        }
         this.currentSystemWindows = windowListAsJson();
 
         /* Bind the actions in AppActions */

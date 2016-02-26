@@ -69,7 +69,7 @@ export default class PreviewWindow extends React.Component {
             </div>);
 
 
-        let windowCapture = <WindowCapture width={width} height={height} wid={clw} dynamic="1" />;
+        let windowCapture = <WindowCapture width={width} height={height} wid={clw} dynamic="1" {...state.pointer} />;
 
         let timeMessage = <Time width={width} height={height} state={state}/>;
 

@@ -64,6 +64,7 @@ export default class LiveWinContainer extends React.Component {
                 <div>
                     {this.getTopBar(this.state.remoteState.showTopBar)}
                     <WindowCapture
+                        {...this.state.remoteState.pointer}
                         width={this.state.window.size.width}
                         height={this.state.window.size.height}
                         wid={this.state.remoteState.currentLiveWindow} dynamic="1" />
@@ -74,12 +75,8 @@ export default class LiveWinContainer extends React.Component {
                 return <Time asDimmer={true} state={this.state.remoteState} > </Time>
             }
             else {
-                if(!_.isNull(this.state)) {
-                    return <Loader message={this.state.remoteState.__("waitingForConnection")} />;
-                } else {
-                    return <div />;
-                }
-
+                let __ = _.get(this, "state.remoteState.__", (x) => x);
+                return <Loader message={__("waitingForConnection")} />;
             }
         }
     }

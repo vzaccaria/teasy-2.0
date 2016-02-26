@@ -9,7 +9,8 @@ class LiveWinAppActions {
     constructor() {
         this.generateActions(
             'updateWindowSize', /* Use commas to add actions */
-            'updateRemoteState'
+            'updateRemoteState',
+            'updateMouseCoordinates'
         )
     }
 }

@@ -18,7 +18,7 @@ auto wNoDesktop    = kCGWindowListExcludeDesktopElements;
 using namespace std;
 
 #define  __a(x)        (CF::Array(x).GetValues())
-#define  __d(x)        (CF::Dictionary(x).GetKeysAndValues())
+#define  __d(x)        (static_cast< CFDictionaryRef >(x))
 #define  __dv(x, k)    (CF::Dictionary(x).GetValue(k))
 #define  __s(x)        (CF::String(x).GetValue())
 #define  __n(x)        (CF::Number(x))
@@ -45,18 +45,25 @@ Json getWindowList() {
 
     auto windowList = __a(CGWindowListCopyWindowInfo(wOnScreenOnly | wNoDesktop, wNullWindow));
     for (auto window: windowList) {
-        auto oname = __s(__dv(window, _s("kCGWindowOwnerName")));
-        auto name = __s(__dv(window, _s("kCGWindowName")));
-        auto wid = __n(__dv(window, _s("kCGWindowNumber")));
-        auto layer = __n(__dv(window, _s("kCGWindowLayer")));
-        auto cname = oname + " - " + name;
-        auto p = CGWindowInfo(cname, wid);
+        auto oname  = __s(__dv(window, _s("kCGWindowOwnerName")));
+        auto name   = __s(__dv(window, _s("kCGWindowName")));
+        auto wid    = __n(__dv(window, _s("kCGWindowNumber")));
+        auto layer  = __n(__dv(window, _s("kCGWindowLayer")));
+        CFDictionaryRef bounds = __d(__dv(window, _s("kCGWindowBounds")));
+        CGRect r;
+        CGRectMakeWithDictionaryRepresentation(bounds, &r);
+        auto cname  = oname + " - " + name;
+        auto p      = CGWindowInfo(cname, wid);
         l.push_back(p);
         windowInfoJson.push_back(Json::object {
                 { "name", name },
                 { "owner", oname },
                 { "wid", (int) wid },
-                { "layer", (int) layer }
+                { "layer", (int) layer },
+                { "x", (int) r.origin.x },
+                { "y", (int) r.origin.y },
+                { "width", (float) r.size.width },
+                { "height", (float) r.size.height}
             });
     }
     return windowInfoJson;

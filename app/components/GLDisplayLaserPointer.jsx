@@ -10,16 +10,17 @@ const shaders = GL.Shaders.create({
         uniform float width;
         uniform float size;
         uniform float height;
+        uniform float intensity;
         uniform vec2 position;
 
         void main () {
-            vec3 color = vec3(1.0, 0.0, 0.0);
+            vec3 color = vec3(0.2, 0.2, 0.2);
             vec2 uvp   = uv       * vec2(width, height);
             vec2 posp  = position * vec2(width, height);
             posp.y = height - posp.y;
             float sizep = size * width;
-            float a = 1.0 - step(sizep, distance(uvp, posp)) ;
-                gl_FragColor = vec4(color, a);
+            float a = step(sizep, distance(uvp, posp)) * intensity ;
+            gl_FragColor = vec4(color, a);
             }`
     }
 });
