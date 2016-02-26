@@ -73,7 +73,7 @@ export default class SystemWindowList extends React.Component {
             }
 
         } else {
-            return <Loader message="Fetching windows" />
+            return <div />
         }
     }
 }

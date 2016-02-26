@@ -62,7 +62,7 @@ export default class PreviewContainer extends React.Component {
                                 message={__('chooseAWindowFromTheLeft')} />
 
             } else {
-                return <Loader message={'...'} />
+                return <Loader inverted="1" message="Fetching windows" />
             }
         }
     }
