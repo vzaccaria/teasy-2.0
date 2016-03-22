@@ -1,7 +1,8 @@
 const GL = require("gl-react");
 const React = GL.React;
 
-import $ from 'jquery'
+import $ from 'jquery';
+let color = require('color');
 
 import ndarray from 'ndarray';
 import _ from 'lodash'
@@ -88,10 +89,10 @@ let WindowCapture = React.createClass({
         var bufChanged   = _.isUndefined(this.state.buf) && !_.isUndefined(ns.buf);
         var propsChanged = (np.width !== this.props.width) ||
                            (np.height !== this.props.height)
-        var pointerChanged = (this.props.type === "live" && (
-                           (np.pointerPosition[0] !== this.props.pointerPosition[0]) ||
-                           (np.pointerPosition[1] !== this.props.pointerPosition[1])))
-        var framenumberChanged  = ns.framenumber !== this.state.framenumber;
+            var pointerChanged = (this.props.type === "live" && (
+                (np.pointerPosition[0] !== this.props.pointerPosition[0]) ||
+                (np.pointerPosition[1] !== this.props.pointerPosition[1])))
+            var framenumberChanged  = ns.framenumber !== this.state.framenumber;
         var shouldUpdate = (propsChanged || bufChanged || framenumberChanged || pointerChanged);
         return shouldUpdate;
     },
@@ -112,15 +113,17 @@ let WindowCapture = React.createClass({
             let shouldShow = current && active;
             let rectStyle  = {};
             if(shouldShow) {
+                let size = 30
                 position = remapRelativePosition(position, this.state.resizeInfo);
                 rectStyle = {
-                    width:  '60px',
-                    height: '60px',
+                    width:  `${size}px`,
+                    height: `${size}px`,
                     position: 'absolute',
-                    backgroundColor: 'black',
-                    left: position[0],
-                    top: position[1],
-                    zIndex: 1
+                    backgroundColor: color("#D33131").alpha(0.7).rgbaString(),
+                    left: position[0] - size/2,
+                    top: position[1] - size/2,
+                    zIndex: 1,
+                    borderRadius: '50%'
                 }
             }
 

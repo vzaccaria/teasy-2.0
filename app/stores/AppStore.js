@@ -106,17 +106,27 @@ class AppStore {
             let { x: ox, y: oy } = this.currentLiveWindowData
             let { x: ax, y: ay } = this.mouseCoordinates
             let { width, height } = this.currentLiveWindowData
-
+            let inx = false;
+            let iny = false;
             if(ax > ox && ax < ox+width) {
+                inx = true;
                 this.pointerSettings.pointerPosition[0] = (ax-ox)/width;
             } else {
+                inx = false;
                 this.pointerSettings.pointerPosition[0] = 0
             }
 
             if(ay > oy && ay < oy+height) {
+                iny = true;
                 this.pointerSettings.pointerPosition[1] = (ay - oy) / height
             } else {
+                iny = true;
                 this.pointerSettings.pointerPosition[1] = 0
+            }
+            if(inx && iny) {
+                this.pointerSettings.pointerActive = true
+            } else {
+                this.pointerSettings.pointerActive = false
             }
 
         }
