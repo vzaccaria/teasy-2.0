@@ -13,6 +13,8 @@ var ipc = require('ipc')
 var mainWindow = null;
 var liveWindow = null;
 
+var mouseRefreshTime = require('./app/utils/config').mouseRefreshTime;
+
 
 app.on('window-all-closed', function() {
     if (process.platform !== 'darwin') app.quit();
@@ -24,11 +26,11 @@ function byPassWidChange(w2) {
     })
 }
 
-function registerMouseHandler(rate, f) {
+function registerMouseHandler(f) {
     var electronScreen = require('screen')
     setInterval(function() {
         f(electronScreen.getCursorScreenPoint())
-    }, (1/rate)*1000)
+    }, mouseRefreshTime)
 }
 
 function getSecondDisplay() {
@@ -75,9 +77,6 @@ function setupLiveWindow() {
         //        liveWindow.openDevTools();
     }
     byPassWidChange(liveWindow);
-    registerMouseHandler(1, function(coord) {
-        liveWindow.webContents.send('update-coordinates', coord)
-    })
 }
 
 function setupMainWindow() {
@@ -99,6 +98,10 @@ function setupMainWindow() {
     mainWindow.on('closed', function() {
         mainWindow = null;
     });
+
+    registerMouseHandler(function(coord) {
+        mainWindow.webContents.send('update-coordinates', coord)
+    })
 
     if (process.env.NODE_ENV === 'development') {
         //        mainWindow.openDevTools();

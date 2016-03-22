@@ -53,7 +53,7 @@ export default class SystemWindowListItem extends React.Component {
         return (
             <div style={style} className="item" onClick={this.clicked.bind(this)}>
                 <div className="ui tiny image">
-                    <WindowCapture key={this.props.key} width="80" height="45" wid={this.props.item.wid}  dynamic="0"/>
+                    <WindowCapture key={this.props.key} width="80" height="45" wid={this.props.item.wid} type="screenshot" />
                 </div>
                 <div className="middle aligned content">
                     <div className="header"> {this.props.item.owner} </div>

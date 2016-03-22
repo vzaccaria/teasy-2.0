@@ -64,10 +64,13 @@ export default class LiveWinContainer extends React.Component {
                 <div>
                     {this.getTopBar(this.state.remoteState.showTopBar)}
                     <WindowCapture
-                        {...this.state.remoteState.pointer}
+                        {...this.state.remoteState.pointerSettings}
                         width={this.state.window.size.width}
                         height={this.state.window.size.height}
-                        wid={this.state.remoteState.currentLiveWindow} dynamic="1" />
+                        wid={this.state.remoteState.currentLiveWindow}
+                        type="live"
+                        iscurrent={true}
+                    />
                 </div>
             );
         } else {

@@ -39,8 +39,6 @@ export default class PreviewWindow extends React.Component {
         var state = this.props.state
         let { width, height } = previewCanvasSize(state);
 
-        let own = state.currentLiveWindowData.owner;
-        let nam = state.currentLiveWindowData.name;
         let clw = state.currentLiveWindow;
 
         let closeHandler = () => {
@@ -69,7 +67,7 @@ export default class PreviewWindow extends React.Component {
             </div>);
 
 
-        let windowCapture = <WindowCapture width={width} height={height} wid={clw} dynamic="1" {...state.pointer} />;
+        let windowCapture = <WindowCapture width={width} height={height} wid={clw} type="preview" {...state.pointerSettings} />;
 
         let timeMessage = <Time width={width} height={height} state={state}/>;
 

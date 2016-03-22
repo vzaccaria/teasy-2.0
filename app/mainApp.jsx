@@ -2,7 +2,16 @@ import __ from "gl-react/react"
 import React from 'react';
 import ReactDOM from 'react-dom'
 import AppContainer from './containers/AppContainer';
-import { updateWindowSize } from './actions/AppActions';
+import { updateWindowSize, updateMouseCoordinates } from './actions/AppActions';
+var ipc = require('ipc');
+
+function listenToMouseCoordinatesChange() {
+    ipc.on('update-coordinates', function(coordinates) {
+        updateMouseCoordinates(coordinates);
+    });
+}
+
+//        debug(`Received updated coordinates ${coordinates}`)
 
 import '../semantic/src/semantic.less';
 
@@ -13,9 +22,11 @@ window.$mine = { }
 window.$mine.enableDebugAll  = () => { _debug.enable('app:*') }
 window.$mine.disableDebugAll = () => { _debug.disable('app:*') }
 
+//window.$mine.enableDebugAll()
 window.$mine.disableDebugAll()
 
 function attachListeners() {
+    listenToMouseCoordinatesChange();
     window.addEventListener('resize', function() {
         debug("resize invoked");
         updateWindowSize({width: window.innerWidth, height: window.innerHeight})

@@ -11,6 +11,8 @@ const debug = _debug('app:components/systemWindowList');
 
 const windowListAsJson = window.require('./utils/native-sgrab-helper').windowListAsJson
 
+import { updateWindowListTime } from '../utils/config';
+
 debug('loaded');
 
 function updateSystemWindows() {
@@ -18,7 +20,7 @@ function updateSystemWindows() {
 }
 
 function setupWindowListHelper() {
-    setInterval( updateSystemWindows, 1000)
+    setInterval( updateSystemWindows, updateWindowListTime )
 }
 
 const validState = (state) => {
@@ -57,21 +59,16 @@ export default class SystemWindowList extends React.Component {
         debug(this.state);
 
         if(validState(this.state)) {
-            let { __, currentSystemWindows, currentLiveWindow, priorityMode } = this.state;
-            if(priorityMode === "normal") {
-                let renderedItems = _.map(currentSystemWindows, (it, idx) => {
-                    var selected = (it.wid === currentLiveWindow) ? "true" : "false"
-                    return (
-                        <SystemWindowListItem item={it} key={idx} selected={selected}/>
-                    )});
+            let { __, currentSystemWindows, currentLiveWindow } = this.state;
+            let renderedItems = _.map(currentSystemWindows, (it, idx) => {
+                var selected = (it.wid === currentLiveWindow) ? "true" : "false"
+                return (
+                    <SystemWindowListItem item={it} key={idx} selected={selected}/>
+                )});
 
-                return(
-                    <div className="ui items">{renderedItems}</div>
-                );
-            } else {
-                return <Loader message={__('showingTopWindow')} />;
-            }
-
+            return(
+                <div className="ui items">{renderedItems}</div>
+            );
         } else {
             return <div />
         }

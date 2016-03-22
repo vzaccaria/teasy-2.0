@@ -2,7 +2,6 @@ import React from 'react';
 import SystemWindowList from '../components/systemWindowList';
 import PreviewContainer from './PreviewContainer'
 import AppStore from '../stores/AppStore';
-import { togglePriorityMode } from '../actions/AppActions'
 import moment from 'moment'
 import { asPopup } from '../components/popup'
 import { LanguageChooser, getLanguageFlag } from '../components/languageChooser'
@@ -38,6 +37,7 @@ export default class AppContainer extends React.Component {
         AppStore.listen(this.onStoreChange.bind(this))
     }
 
+
     componentWillUnmount() {
         AppStore.unlisten(this.onStoreChange.bind(this))
     }
@@ -45,7 +45,7 @@ export default class AppContainer extends React.Component {
     render() {
         debug("Rendering");
         if(validState(this.state)) {
-            let { __, priorityMode } = this.state;
+            let { __ } = this.state;
             return (
                 <div>
                     <div className="ui inverted menu fixed">

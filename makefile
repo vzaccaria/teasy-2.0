@@ -1,6 +1,6 @@
 PROCREGEXP="node.*webpack|Electron"
 
-include ~/.make/index.make
+include index.make
 
 all: start
 

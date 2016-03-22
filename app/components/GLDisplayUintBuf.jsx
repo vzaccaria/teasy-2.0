@@ -23,11 +23,14 @@ const shaders = GL.Shaders.create({
 
 
 let GLDisplayUintBuf = GL.createComponent(
-    ({ width, height, image, children: tex }) => {
+    ({ width, height, image, children: tex, className }) => {
         width = parseInt(width);
         height = parseInt(height);
         return (
-            <GL.Node width={(width)} height={(height)} shader={shaders.justDisplay} uniforms={{ image, tex }}>
+            <GL.Node width={(width)}
+                     height={(height)}
+                     shader={shaders.justDisplay}
+                     uniforms={{ image, tex }} >
             </GL.Node>
         );
     },

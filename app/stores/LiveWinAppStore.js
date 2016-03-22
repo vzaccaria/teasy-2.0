@@ -19,14 +19,10 @@ class LiveWinAppStore {
                 height: window.innerHeight
             }
         }
-        this.mouseCoordinates = {}
         /* Bind the actions in LiveWinAppActions */
         this.bindActions(LiveWinAppActions)
     }
 
-    updateMouseCoordinates(coordinates) {
-        this.mouseCoordinates = coordinates
-    }
 
     updateRemoteState(state) {
         this.remoteState = state

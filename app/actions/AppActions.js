@@ -16,8 +16,9 @@ class AppActions {
             'setBreakTime',
             'clearBreakTime',
             'changeLanguage',
-            'togglePriorityMode',
-            'toggleShowTopBar'
+            'toggleShowTopBar',
+            'updatePointerSettings',
+            'updateMouseCoordinates'
         )
     }
 

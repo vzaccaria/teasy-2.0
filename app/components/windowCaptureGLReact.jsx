@@ -1,14 +1,16 @@
 const GL = require("gl-react");
 const React = GL.React;
 
+import $ from 'jquery'
+
 import ndarray from 'ndarray';
 import _ from 'lodash'
 import { GLDisplayUintBuf } from './GLDisplayUintBuf';
-import { GLDisplayLaserPointer } from './GLDisplayLaserPointer';
 import Loader from './loader'
-const { Surface } = require("gl-react-dom")
+const { Surface } = require("gl-react-dom");
+import { GLSurfaceCanvas } from './GLSurfaceCanvas';
 
-    const nsh = window.require('./utils/native-sgrab-helper');
+const nsh = window.require('./utils/native-sgrab-helper');
 
 window.grabHelper = nsh;
 
@@ -21,35 +23,41 @@ function getWindowBufferFromWid(wid, width, height) {
 }
 
 
+
 debug('loaded');
 
-function isDynamic(props) {
-    return !_.isUndefined(props.dynamic) && _.isEqual(props.dynamic, "1");
+
+function remapRelativePosition(pos, resInfo) {
+    let [ rx, ry ] = pos;
+    let { borderSizeLeft, borderSizeTop, innerWidth, innerHeight, borderSizeBottom, borderSizeRight } = resInfo;
+    let ax = ((rx * innerWidth) + borderSizeLeft);
+    //(innerWidth + borderSizeLeft + borderSizeRight);
+    let ay = ((ry * innerHeight) + borderSizeTop);
+    //(innerHeight + borderSizeTop + borderSizeBottom);
+    return [ax, ay]
 }
+
+import { refreshRates, maxImageRefreshTime } from '../utils/config';
 
 let WindowCapture = React.createClass({
 
-    refreshImageBuffer: function(props, update) {
+    refreshImageBuffer: function() {
         if(this.state.mounted) {
-            let width = parseInt(props.width);
-            let height = parseInt(props.height);
-            let wid = parseInt(props.wid);
-            let refreshPeriod = parseInt(props.refreshPeriod) || 1000;
+            let width = parseInt(this.props.width);
+            let height = parseInt(this.props.height);
+            let wid = parseInt(this.props.wid);
 
-            debug(width, height, wid);
-            let { buf, cols, rows } = getWindowBufferFromWid(wid, width, height);
-            debug(cols, rows);
+            debug({width, height, wid});
+            let { buf, cols, rows, resizeInfo } = getWindowBufferFromWid(wid, width, height);
+            debug({cols, rows});
             this.setState({
                 buf: ndarray(buf, [rows, cols, 4]).transpose(1,0),
                 width: cols,
                 height: rows,
-                time: Date.now()
+                resizeInfo: resizeInfo,
+                framenumber: this.state.framenumber + 1
             });
-            if(update && this.state.mounted) {
-                setTimeout(() => {
-                    this.refreshImageBuffer(this.props, true);
-                }, refreshPeriod);
-            }}
+        }
     },
 
     getInitialState: function() {
@@ -57,13 +65,15 @@ let WindowCapture = React.createClass({
             buf: undefined,
             width: 1,
             height: 1,
-            time: Date.now(),
-            mounted: true
+            mounted: true,
+            throttledRefreshImage: _.throttle(this.refreshImageBuffer,maxImageRefreshTime),
+            framenumber: 0
         };
     },
 
     componentDidMount: function() {
-        this.refreshImageBuffer(this.props, isDynamic(this.props))
+        setInterval(this.state.throttledRefreshImage, refreshRates[this.props.type]);
+        this.state.throttledRefreshImage()
     },
 
     componentWillUnmount: function() {
@@ -71,48 +81,55 @@ let WindowCapture = React.createClass({
     },
 
     componentWillReceiveProps: function(props) {
-        this.refreshImageBuffer(props, false);
+        this.state.throttledRefreshImage(props, false);
     },
 
     shouldComponentUpdate: function(np, ns) {
-        var bufChanged = _.isUndefined(this.state.buf) && !_.isUndefined(ns.buf);
-        var propsChanged = !(_.isEqual(np, this.props));
-        var timeChanged = (ns.time !== this.state.time);
-        var shouldUpdate = propsChanged || bufChanged || (isDynamic(this.props) && timeChanged);
+        var bufChanged   = _.isUndefined(this.state.buf) && !_.isUndefined(ns.buf);
+        var propsChanged = (np.width !== this.props.width) ||
+                           (np.height !== this.props.height)
+        var pointerChanged = (this.props.type === "live" && (
+                           (np.pointerPosition[0] !== this.props.pointerPosition[0]) ||
+                           (np.pointerPosition[1] !== this.props.pointerPosition[1])))
+        var framenumberChanged  = ns.framenumber !== this.state.framenumber;
+        var shouldUpdate = (propsChanged || bufChanged || framenumberChanged || pointerChanged);
         return shouldUpdate;
     },
 
     render: function()  {
+        let thisWindowSize  = {
+            width: parseInt(this.props.width),
+            height: parseInt(this.props.height)
+        }
         if(_.isUndefined(this.state.buf)) {
-            let s = {
-                width: this.props.width,
-                height: this.props.height
-            }
-            return (<Loader style={s} message="Rendering.." />);
+            return (<Loader style={thisWindowSize} message="Rendering.." />);
         } else {
-            let size  = {
-                width: parseInt(this.props.width),
-                height: parseInt(this.props.height)
+            let current    = _.get(this.props, "iscurrent", false);
+            let active     = _.get(this.props, "pointerActive", false);
+            let position   = _.get(this.props, "pointerPosition", [1, 0]);
+            let intensity  = _.get(this.props, "pointerIntensity", 0.9);
+            let psize      = _.get(this.props, "pointerSize", 0.9);
+            let shouldShow = current && active;
+            let rectStyle  = {};
+            if(shouldShow) {
+                position = remapRelativePosition(position, this.state.resizeInfo);
+                rectStyle = {
+                    width:  '60px',
+                    height: '60px',
+                    position: 'absolute',
+                    backgroundColor: 'black',
+                    left: position[0],
+                    top: position[1],
+                    zIndex: 1
+                }
             }
-            let active = _.get(this.props, "pointerActive", false);
-            let position = _.get(this.props, "pointerPosition", [1.0, 0.5]);
-            let intensity = _.get(this.props, "pointerIntensity", 0.9);
-            let psize = _.get(this.props, "pointerSize", 0.9);
 
-            if(active) {
-                return (
-                    <Surface {...size}  >
-                        <GLDisplayUintBuf {...size} image={this.state.buf}>
-                            <GLDisplayLaserPointer {...size} size={psize} position={position} intensity={intensity} />
-                        </GLDisplayUintBuf>
-                    </Surface>
-                );
-            } else {
-                return (
-                    <Surface {...size}>
-                        <GLDisplayUintBuf {...size} image={this.state.buf} />
-                    </Surface>);
-            }
+            return (
+                <div>
+                    {shouldShow ? <div style={rectStyle}> </div> : ""}
+                    <GLSurfaceCanvas {...thisWindowSize} framenumber={this.state.framenumber} buf={this.state.buf} />
+                </div>
+            );
         }
     }
 

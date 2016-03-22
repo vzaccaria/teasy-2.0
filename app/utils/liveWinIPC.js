@@ -1,19 +1,12 @@
 var ipc = require('ipc');
 
-var { updateRemoteState, updateMouseCoordinates } = require('../actions/LiveWinAppActions');
+var { updateRemoteState } = require('../actions/LiveWinAppActions');
 
 import _debug from 'debug';
 const debug = _debug('liveWinApp:utils/liveWinIPC');
 
 function sendStateChange(state) {
     ipc.send('update-state', { state });
-}
-
-function listenToMouseCoordinatesChange() {
-    ipc.on('update-coordinates', function(coordinates) {
-        debug(`Received updated coordinates ${coordinates}`)
-        updateMouseCoordinates(coordinates);
-    });
 }
 
 function listenToStateChange() {
@@ -26,6 +19,5 @@ function listenToStateChange() {
 
 module.exports = {
     sendStateChange,
-    listenToStateChange,
-    listenToMouseCoordinatesChange
+    listenToStateChange
 }
