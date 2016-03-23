@@ -42,8 +42,8 @@ class AppStore {
         this.pointerSettings = {
             pointerActive: false,
             pointerPosition: [0.5, 0.5],
-            pointerIntensity: 0.9,
-            pointerSize: 0.05
+            pointerColor: "#FF0000",
+            pointerSize: 30
         }
         this.mouseCoordinates = {
             x: 0,
@@ -136,12 +136,11 @@ class AppStore {
     setBreakTime({
         minutesFromNow
     }) {
-        this.liveView.breakTime = moment().add(minutesFromNow, "minute").format("HH:mm")
-            // Shouldnt invoke sendStateChange?
+        this.updateLiveViewTime({breakTime: moment().add(minutesFromNow, "minute").format("HH:mm")})
     }
 
     clearBreakTime() {
-        this.liveView.breakTime = undefined;
+        this.liveView.time.breakTime = undefined;
         // Shouldnt invoke sendStateChange?
     }
 
@@ -159,6 +158,7 @@ class AppStore {
         this.showTopBar = !this.showTopBar;
         sendStateChange(this);
     }
+
 }
 
 module.exports = window.$s = alt.createStore(AppStore, 'AppStore');

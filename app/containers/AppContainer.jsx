@@ -60,7 +60,6 @@ export default class AppContainer extends React.Component {
                         <div style={WindowListStyle(this.state.window)}>
                             <SystemWindowList />
                         </div>
-                        B
                         <div style={PreviewStyle}>
                             <PreviewContainer />
                         </div>

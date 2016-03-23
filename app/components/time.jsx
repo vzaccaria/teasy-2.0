@@ -7,7 +7,7 @@ export default class Time extends React.Component {
     render()  {
         let curtime = moment();
 
-        let showBreakTime = _.get(this.props, "state.liveView.breakTime", false);
+        let showBreakTime = _.get(this.props, "state.liveView.time.breakTime", false);
         let __ = _.get(this.props, "state.__", () => "");
         let message = __(curtime, {short: true });
         if(showBreakTime !== false) {

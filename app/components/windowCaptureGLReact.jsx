@@ -108,8 +108,7 @@ let WindowCapture = React.createClass({
             let current    = _.get(this.props, "iscurrent", false);
             let active     = _.get(this.props, "pointerActive", false);
             let position   = _.get(this.props, "pointerPosition", [1, 0]);
-            let intensity  = _.get(this.props, "pointerIntensity", 0.9);
-            let psize      = _.get(this.props, "pointerSize", 0.9);
+            let pcolor     = _.get(this.props, "pointerColor", 0.9);
             let shouldShow = current && active;
             let rectStyle  = {};
             if(shouldShow) {
@@ -119,7 +118,7 @@ let WindowCapture = React.createClass({
                     width:  `${size}px`,
                     height: `${size}px`,
                     position: 'absolute',
-                    backgroundColor: color("#D33131").alpha(0.7).rgbaString(),
+                    backgroundColor: pcolor,
                     left: position[0] - size/2,
                     top: position[1] - size/2,
                     zIndex: 1,

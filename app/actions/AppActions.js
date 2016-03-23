@@ -18,7 +18,8 @@ class AppActions {
             'changeLanguage',
             'toggleShowTopBar',
             'updatePointerSettings',
-            'updateMouseCoordinates'
+            'updateMouseCoordinates',
+            'toggleColorPicker'
         )
     }
 

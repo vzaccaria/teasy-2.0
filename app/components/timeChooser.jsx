@@ -11,9 +11,14 @@ let timeChoices = [
 ];
 
 function renderItem(it) {
+
+    let handler = () => {
+        setBreakTime({minutesFromNow: it.value})
+    }
+
     let style = {width: '8rem', cursor: 'pointer', marginTop: '0.5rem', marginBottom: '0.5rem'} ;
     return (
-        <div className="ui button" key={it.key} style={style} onClick={() => setBreakTime({minutesFromNow: it.value})}>
+        <div className="ui button" key={it.key} style={style} onClick={handler}>
             {it.display}
         </div>);
 }

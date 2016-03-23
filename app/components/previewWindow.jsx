@@ -10,12 +10,11 @@ import TimeChooser from '../components/TimeChooser'
 import Time from '../components/time'
 import { WindowCapture } from '../components/windowCaptureGLReact.jsx';
 import { LanguageChooser, getLanguageFlag } from '../components/languageChooser'
+import ColorChooser from '../components/ColorChooser'
 
-
-let {IconPopup: IconPopupLang, IconPopupContent: IconPopupContentLang} = asPopup("spinner", <LanguageChooser />);
-
-let {IconPopup: IconPopupTime, IconPopupContent: IconPopupContentTime} = asPopup("spinner", <TimeChooser />);
-
+let {IconPopup: IconPopupLang  , IconPopupContent: IconPopupContentLang} = asPopup("spinner"     , <LanguageChooser />);
+let {IconPopup: IconPopupTime  , IconPopupContent: IconPopupContentTime} = asPopup("spinner"     , <TimeChooser />);
+let {IconPopup: IconPopupColor , IconPopupContent: IconPopupContentColor} = asPopup("eyedropper" , <ColorChooser />);
 
 import { Icon } from '../components/icon';
 
@@ -56,11 +55,18 @@ export default class PreviewWindow extends React.Component {
         let overlayMenu = (
             <div style={{ background: color("#000000").rgbaString(), width: width, height: barSize }} >
                 <div className="ui small floated right secondary menu inverted">
+
+                    <IconPopupColor />
+                    <IconPopupContentColor />
+
                     <IconPopupLang className={`${getLanguageFlag(state.currentLanguage)} flag`} />
                     <IconPopupContentLang />
+
                     <Icon type="maximize" onClick={toggleShowTopBar} />
+
                     <IconPopupTime />
-                    <IconPopupContentTime IconPopupContentTime />
+                    <IconPopupContentTime />
+
                     <Icon type="time" onClick={toggleTimeHandler} />
                     <Icon type="remove" onClick={closeHandler} />
                 </div>
