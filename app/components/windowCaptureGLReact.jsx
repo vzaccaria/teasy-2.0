@@ -109,10 +109,11 @@ let WindowCapture = React.createClass({
             let active     = _.get(this.props, "pointerActive", false);
             let position   = _.get(this.props, "pointerPosition", [1, 0]);
             let pcolor     = _.get(this.props, "pointerColor", 0.9);
+            let size       = _.get(this.props, "pointerSize", 1);
             let shouldShow = current && active;
             let rectStyle  = {};
+
             if(shouldShow) {
-                let size = 30
                 position = remapRelativePosition(position, this.state.resizeInfo);
                 rectStyle = {
                     width:  `${size}px`,
