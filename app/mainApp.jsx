@@ -14,6 +14,7 @@ function listenToMouseCoordinatesChange() {
 //        debug(`Received updated coordinates ${coordinates}`)
 
 import '../semantic/src/semantic.less';
+import './styles/blink.less';
 
 import _debug from 'debug';
 const debug = _debug('app:mainApp');

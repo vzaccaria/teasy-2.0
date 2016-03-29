@@ -6,6 +6,7 @@ import { updateWindowSize } from './actions/LiveWinAppActions';
 import { listenToStateChange } from './utils/liveWinIPC';
 import _debug from 'debug';
 import '../semantic/src/semantic.less';
+import './styles/blink.less';
 
 
 const debug = _debug('app:liveWinApp');

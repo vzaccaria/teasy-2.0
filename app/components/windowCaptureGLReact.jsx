@@ -110,6 +110,9 @@ let WindowCapture = React.createClass({
             let position   = _.get(this.props, "pointerPosition", [1, 0]);
             let pcolor     = _.get(this.props, "pointerColor", 0.9);
             let size       = _.get(this.props, "pointerSize", 1);
+            if(this.props.type === "preview") {
+                size = size / 2
+            }
             let shouldShow = current && active;
             let rectStyle  = {};
 
@@ -129,7 +132,7 @@ let WindowCapture = React.createClass({
 
             return (
                 <div>
-                    {shouldShow ? <div style={rectStyle}> </div> : ""}
+                    {shouldShow ? <div className="blink" style={rectStyle}> </div> : ""}
                     <GLSurfaceCanvas {...thisWindowSize} framenumber={this.state.framenumber} buf={this.state.buf} />
                 </div>
             );
