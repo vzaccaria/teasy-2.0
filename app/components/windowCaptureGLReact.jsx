@@ -1,5 +1,5 @@
 const GL = require("gl-react");
-const React = GL.React;
+const React = require('react');
 
 import $ from 'jquery';
 let color = require('color');

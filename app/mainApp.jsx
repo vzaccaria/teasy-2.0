@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom'
 import AppContainer from './containers/AppContainer';
 import { updateWindowSize, updateMouseCoordinates } from './actions/AppActions';
-var ipc = require('ipc');
+var ipc = require('electron').ipcRenderer;
 
 function listenToMouseCoordinatesChange() {
     ipc.on('update-coordinates', function(coordinates) {

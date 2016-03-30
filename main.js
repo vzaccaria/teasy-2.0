@@ -8,7 +8,7 @@ var _ = require('lodash')
 require('electron-debug')();
 require('crash-reporter').start();
 
-var ipc = require('ipc')
+var ipc = require('electron').ipcMain
 
 var mainWindow = null;
 var liveWindow = null;
@@ -66,9 +66,9 @@ function setupLiveWindow() {
     liveWindow = new BrowserWindow(wnd)
 
     if (process.env.HOT) {
-        liveWindow.loadUrl('file://' + __dirname + '/app/hot-dev-liveWin.html');
+        liveWindow.loadURL('file://' + __dirname + '/app/hot-dev-liveWin.html');
     } else {
-        liveWindow.loadUrl('file://' + __dirname + '/app/liveWin.html');
+        liveWindow.loadURL('file://' + __dirname + '/app/liveWin.html');
     }
     liveWindow.on('closed', function() {
         liveWindow = null;
@@ -86,9 +86,9 @@ function setupMainWindow() {
     });
 
     if (process.env.HOT) {
-        mainWindow.loadUrl('file://' + __dirname + '/app/hot-dev-app.html');
+        mainWindow.loadURL('file://' + __dirname + '/app/hot-dev-app.html');
     } else {
-        mainWindow.loadUrl('file://' + __dirname + '/app/app.html');
+        mainWindow.loadURL('file://' + __dirname + '/app/app.html');
     }
 
     mainWindow.setAlwaysOnTop(true);
