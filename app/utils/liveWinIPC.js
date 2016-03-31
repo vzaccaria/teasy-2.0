@@ -1,16 +1,16 @@
+import _debug from 'debug';
+const debug = _debug(__filename)
+debug('loading ipc renderer')
+
 var ipc = require('electron').ipcRenderer;
 
 var { updateRemoteState } = require('../actions/LiveWinAppActions');
 
-import _debug from 'debug';
-const debug = _debug('liveWinApp:utils/liveWinIPC');
-
-function sendStateChange(state) {
-    ipc.send('update-state', { state });
-}
 
 function listenToStateChange() {
-    ipc.on('update-state', function({state}) {
+    debug('registering to statechange')
+    ipc.on('update-state', function(sender, state) {
+        state = state.state
         debug('received updated state')
         debug(state)
         updateRemoteState(state);
@@ -18,6 +18,7 @@ function listenToStateChange() {
 }
 
 module.exports = {
-    sendStateChange,
     listenToStateChange
 }
+
+debug('loaded!')

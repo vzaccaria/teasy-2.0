@@ -4,7 +4,7 @@ var AppActions = require('../actions/AppActions');
 import {
     sendStateChange
 }
-from '../utils/liveWinIPC'
+from '../utils/appWinIPC'
 import moment from 'moment'
 import i18n from '../utils/i18n'
 

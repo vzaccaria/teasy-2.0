@@ -25,6 +25,7 @@ class LiveWinAppStore {
 
 
     updateRemoteState(state) {
+        debug(state)
         this.remoteState = state
         this.remoteState.__ = i18n(this.remoteState.currentLanguage)
     }

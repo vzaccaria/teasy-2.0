@@ -2,9 +2,9 @@ PROCREGEXP="node.*webpack|Electron"
 
 include index.make
 
-all: start
+all: compile
 
-run: compile
+run:
 		./node_modules/.bin/electron .
 
 compile:
@@ -24,8 +24,8 @@ package: compile
 ######################
 
 start:
-	npm run dev-server &
-	npm run start-dev &
+	npm run hot-dev-server &
+	npm run start-hot &
 
 show: show-procs
 
