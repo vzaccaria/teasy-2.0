@@ -73,7 +73,7 @@
     "minimist": "1.2.0",
     "mocha": "2.3.0",
     "moment": "2.10.6",
-    "nan": "2.1.0",
+    "nan": "2.2.1",
     "ndarray": "1.0.18",
     "node-gyp": "3.1.0",
     "node-libs-browser": "0.5.3",
