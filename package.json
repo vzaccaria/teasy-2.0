@@ -33,6 +33,7 @@
     "webpack",
     "react-hot"
   ],
+    "devDependencies": {},
   "dependencies": {
     "alt": "0.17.8",
     "asar": "0.8.0",
@@ -47,6 +48,7 @@
     "debug": "2.2.0",
     "del": "2.0.1",
     "electron-debug": "0.5.2",
+    "electron-installer-dmg": "0.1.0",
     "electron-packager": "6.0.0",
     "electron-prebuilt": "0.37.2",
     "electron-rebuild": "1.1.3",
