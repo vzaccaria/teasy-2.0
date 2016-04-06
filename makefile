@@ -19,6 +19,9 @@ package: compile
 		cp ./assets/TeasyIcon.icns ./app/app.icns
 		node package.js
 
+dmg:
+	./node_modules/.bin/appdmg ./dmg.json ./Teasy.dmg
+
 ######################
 # Development targets
 ######################
