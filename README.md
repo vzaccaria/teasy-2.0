@@ -1,3 +1,7 @@
+# DEPRECATED -
+
+Look for [vzaccaria/teasy](https://github.com/vzaccaria)
+
 # electron-react-boilerplate
 
 [![NPM version][npm-image]][npm-url]
@@ -34,7 +38,7 @@ If you use any 3rd party libraries which can't be built with webpack, you must l
 
 ```javascript
 externals.push(
-	// put your node 3rd party libraries which can't be built with webpack here (mysql, mongodb, and so on..)
+    // put your node 3rd party libraries which can't be built with webpack here (mysql, mongodb, and so on..)
 )
 ```
 
